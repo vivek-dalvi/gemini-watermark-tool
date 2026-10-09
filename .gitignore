@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Test, benchmark, and probe artifacts
+.artifacts/
+coverage/
+.nyc_output/
+out/
+playwright-report/
+test-results/
+
+# Local browser/debug profiles
+.chrome-debug/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temporary files and caches
+.cache/
+.parcel-cache/
+.vite/
+.npm-cache-local/
+.npm-tmp-cache/
+.pnpm-store/
+.tmp-*
+tmp/
+temp/
+
+# Local agent/worktree state
+.agents/
+.worktrees/
+.omx/
+docs/superpowers/
+
+# Generated sample exports
+src/assets/samples/*-fix.*
+src/assets/samples/fix/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.history/
+.idea/
+.vscode/

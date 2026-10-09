@@ -1,0 +1,540 @@
+{
+  "version": 1,
+  "timestamps": [1, 3, 5, 7, 9],
+  "cases": [
+    {
+      "id": "4d420881",
+      "label": "1080p standard, current edgeboost045 cleanup150 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\4d420881-c144-497f-9a6e-43beda086580.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\4d420881-gwr-video-mvp-edgeboost045-cleanup150.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "none"
+      },
+      "referencePath": ".artifacts\\allenk-video\\4d420881-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1740,
+          "y": 900,
+          "size": 72,
+          "marginRight": 108,
+          "marginBottom": 108
+        }
+      },
+      "tags": ["1080p", "standard", "baseline", "has-allenk"]
+    },
+    {
+      "id": "4d420881-edge-denoise",
+      "label": "1080p standard, canvas-edge-denoise vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\4d420881-c144-497f-9a6e-43beda086580.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\4d420881-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-denoise.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-denoise",
+        "edgeDenoiseStrength": 0.65
+      },
+      "referencePath": ".artifacts\\allenk-video\\4d420881-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1740,
+          "y": 900,
+          "size": 72,
+          "marginRight": 108,
+          "marginBottom": 108
+        }
+      },
+      "tags": ["variant", "canvas-edge-denoise", "1080p", "standard", "has-allenk"]
+    },
+    {
+      "id": "4d420881-edge-denoise100",
+      "label": "1080p standard, canvas-edge-denoise strength 1.0 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\4d420881-c144-497f-9a6e-43beda086580.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\4d420881-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-denoise100.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-denoise",
+        "edgeDenoiseStrength": 1
+      },
+      "referencePath": ".artifacts\\allenk-video\\4d420881-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1740,
+          "y": 900,
+          "size": 72,
+          "marginRight": 108,
+          "marginBottom": 108
+        }
+      },
+      "tags": ["variant", "canvas-edge-denoise", "strength-100", "1080p", "standard", "has-allenk"]
+    },
+    {
+      "id": "4d420881-edge-band-denoise080",
+      "label": "1080p standard, canvas-edge-band-denoise strength 0.8 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\4d420881-c144-497f-9a6e-43beda086580.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\4d420881-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-band-denoise080.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-band-denoise",
+        "edgeDenoiseStrength": 0.8
+      },
+      "referencePath": ".artifacts\\allenk-video\\4d420881-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1740,
+          "y": 900,
+          "size": 72,
+          "marginRight": 108,
+          "marginBottom": 108
+        }
+      },
+      "tags": ["variant", "canvas-edge-band-denoise", "strength-080", "1080p", "standard", "has-allenk"]
+    },
+    {
+      "id": "4d420881-edge-band-denoise050",
+      "label": "1080p standard, canvas-edge-band-denoise strength 0.5 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\4d420881-c144-497f-9a6e-43beda086580.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\4d420881-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-band-denoise050.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-band-denoise",
+        "edgeDenoiseStrength": 0.5
+      },
+      "referencePath": ".artifacts\\allenk-video\\4d420881-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1740,
+          "y": 900,
+          "size": 72,
+          "marginRight": 108,
+          "marginBottom": 108
+        }
+      },
+      "tags": ["variant", "canvas-edge-band-denoise", "strength-050", "1080p", "standard", "has-allenk"]
+    },
+    {
+      "id": "095eddb6",
+      "label": "low-visible/intermittent sample, current cleanup150 export",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\095eddb6-4846-4dab-996c-ce93e42fd3af.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\095eddb6-gwr-video-mvp-edgeboost045-cleanup150.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "none",
+        "allowLowConfidence": true
+      },
+      "referencePath": null,
+      "notes": "allenk v0.6.2 auto mode skipped this sample: no Gemini 3.5 diamond detected at 1920x1080.",
+      "tags": ["current-export", "low-visible", "allenk-auto-skip", "pending-reference"]
+    },
+    {
+      "id": "deaee69b",
+      "label": "relocated negative/gray polarity sample, current cleanup150 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\deaee69b-bd2f-481d-ba4d-bca20a1b4c8e.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\deaee69b-gwr-video-mvp-edgeboost045-cleanup150.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "none",
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\deaee69b-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["current-export", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "deaee69b-edge-denoise",
+      "label": "relocated negative/gray polarity sample, canvas-edge-denoise vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\deaee69b-bd2f-481d-ba4d-bca20a1b4c8e.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\deaee69b-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-denoise.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-denoise",
+        "edgeDenoiseStrength": 0.65,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\deaee69b-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-denoise", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "deaee69b-edge-denoise100",
+      "label": "relocated negative/gray polarity sample, canvas-edge-denoise strength 1.0 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\deaee69b-bd2f-481d-ba4d-bca20a1b4c8e.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\deaee69b-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-denoise100.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-denoise",
+        "edgeDenoiseStrength": 1,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\deaee69b-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-denoise", "strength-100", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "deaee69b-edge-band-denoise080",
+      "label": "relocated negative/gray polarity sample, canvas-edge-band-denoise strength 0.8 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\deaee69b-bd2f-481d-ba4d-bca20a1b4c8e.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\deaee69b-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-band-denoise080.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-band-denoise",
+        "edgeDenoiseStrength": 0.8,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\deaee69b-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-band-denoise", "strength-080", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "deaee69b-edge-band-denoise050",
+      "label": "relocated negative/gray polarity sample, canvas-edge-band-denoise strength 0.5 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\deaee69b-bd2f-481d-ba4d-bca20a1b4c8e.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\deaee69b-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-band-denoise050.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-band-denoise",
+        "edgeDenoiseStrength": 0.5,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\deaee69b-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-band-denoise", "strength-050", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "e1997e6e",
+      "label": "relocated negative/gray polarity sample, current cleanup150 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\e1997e6e-45d5-4895-ae81-a7361c05bc37.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\e1997e6e-gwr-video-mvp-edgeboost045-cleanup150.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "none",
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\e1997e6e-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["current-export", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "e1997e6e-edge-denoise",
+      "label": "relocated negative/gray polarity sample, canvas-edge-denoise vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\e1997e6e-45d5-4895-ae81-a7361c05bc37.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\e1997e6e-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-denoise.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-denoise",
+        "edgeDenoiseStrength": 0.65,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\e1997e6e-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-denoise", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "e1997e6e-edge-denoise100",
+      "label": "relocated negative/gray polarity sample, canvas-edge-denoise strength 1.0 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\e1997e6e-45d5-4895-ae81-a7361c05bc37.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\e1997e6e-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-denoise100.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-denoise",
+        "edgeDenoiseStrength": 1,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\e1997e6e-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-denoise", "strength-100", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "e1997e6e-edge-band-denoise080",
+      "label": "relocated negative/gray polarity sample, canvas-edge-band-denoise strength 0.8 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\e1997e6e-45d5-4895-ae81-a7361c05bc37.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\e1997e6e-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-band-denoise080.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-band-denoise",
+        "edgeDenoiseStrength": 0.8,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\e1997e6e-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-band-denoise", "strength-080", "negative-gray", "relocated", "has-allenk"]
+    },
+    {
+      "id": "e1997e6e-edge-band-denoise050",
+      "label": "relocated negative/gray polarity sample, canvas-edge-band-denoise strength 0.5 vs allenk v0.6.2",
+      "originalPath": "D:\\Project\\sample-files\\gemini-video-watermark\\e1997e6e-45d5-4895-ae81-a7361c05bc37.mp4",
+      "currentPath": ".artifacts\\video-alpha-research\\e1997e6e-gwr-video-mvp-edgeboost045-cleanup150-canvas-edge-band-denoise050.mp4",
+      "currentProfile": {
+        "algorithm": "gwr-video-mvp",
+        "alphaProfile": "edgeboost045",
+        "cleanupBackend": "canvas-soft",
+        "residualCleanupStrength": 1.5,
+        "denoiseBackend": "canvas-edge-band-denoise",
+        "edgeDenoiseStrength": 0.5,
+        "allowLowConfidence": true
+      },
+      "referencePath": ".artifacts\\allenk-video\\e1997e6e-allenk-v062.mp4",
+      "referenceProfile": {
+        "algorithm": "allenk",
+        "version": "0.6.2",
+        "denoiseBackend": "ncnn",
+        "sigma": 75,
+        "strengthPercent": 180
+      },
+      "expected": {
+        "width": 1920,
+        "height": 1080,
+        "anchor": {
+          "x": 1704,
+          "y": 864,
+          "size": 72,
+          "marginRight": 144,
+          "marginBottom": 144
+        }
+      },
+      "tags": ["variant", "canvas-edge-band-denoise", "strength-050", "negative-gray", "relocated", "has-allenk"]
+    }
+  ]
+}

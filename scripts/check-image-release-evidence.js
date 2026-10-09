@@ -1,0 +1,178 @@
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { readFile, readdir, stat } from 'node:fs/promises';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+import {
+    IMAGE_RELEASE_SOURCE_PATHS,
+    sha256File,
+    verifyImageReleaseEvidence
+} from './image-release-evidence.js';
+
+async function readJson(filePath) {
+    return JSON.parse(await readFile(filePath, 'utf8'));
+}
+
+async function loadReleasePackage(latestExtensionPath) {
+    const latest = await readJson(latestExtensionPath);
+    const releaseDir = path.dirname(latestExtensionPath);
+    const zipPath = path.resolve(releaseDir, latest.file);
+    const [sha256, info, checksumText] = await Promise.all([
+        sha256File(zipPath),
+        stat(zipPath),
+        readFile(`${zipPath}.sha256.txt`, 'utf8')
+    ]);
+    if (sha256 !== latest.sha256 || info.size !== latest.size || !checksumText.trim().startsWith(sha256)) {
+        throw new Error('Release package metadata does not match the zip/checksum files');
+    }
+    return { version: latest.version, file: latest.file, sha256, size: info.size };
+}
+
+function readGitOutput(args, cwd) {
+    return execFileSync('git', args, { cwd, encoding: 'utf8' });
+}
+
+function resolvePreviousPackageReleaseRef(currentVersion, cwd) {
+    const commits = readGitOutput(['log', '--format=%H', '--', 'package.json'], cwd)
+        .split(/\r?\n/)
+        .map((value) => value.trim())
+        .filter(Boolean);
+    for (const commit of commits) {
+        const pkg = JSON.parse(readGitOutput(['show', commit + ':package.json'], cwd));
+        if (pkg.version && pkg.version !== currentVersion) return commit;
+    }
+    throw new Error('Unable to resolve the previous package release before ' + currentVersion);
+}
+
+function readVideoChangedFiles(baseRef, cwd) {
+    const output = readGitOutput([
+        'diff',
+        '--name-only',
+        baseRef,
+        '--',
+        'src/video',
+        'src/video-app.js'
+    ], cwd);
+    return output.split(/\r?\n/).map((value) => value.trim()).filter(Boolean);
+}
+
+async function loadCurrentState({
+    packageJsonPath,
+    latestExtensionPath,
+    sourcePaths,
+    baseTag,
+    changedFiles,
+    cwd,
+    evidence
+}) {
+    const pkg = await readJson(packageJsonPath);
+    if (evidence?.schemaVersion === 2) {
+        sourcePaths = (await readdir(path.resolve(cwd, 'src'), { recursive: true }))
+            .filter(name => name.endsWith('.js')).map(name => `src/${name.replaceAll('\\', '/')}`).sort();
+    }
+    const sourceHashes = new Map();
+    for (const sourcePath of sourcePaths) {
+        const sourceFile = path.resolve(cwd, sourcePath);
+        sourceHashes.set(sourcePath, evidence?.schemaVersion === 2
+            ? createHash('sha256').update((await readFile(sourceFile, 'utf8')).replaceAll('\r\n', '\n')).digest('hex')
+            : await sha256File(sourceFile));
+    }
+    const outOfScopeChangedFiles = changedFiles ?? readVideoChangedFiles(
+        baseTag || resolvePreviousPackageReleaseRef(pkg.version, cwd),
+        cwd
+    );
+    let comparisonState = {};
+    if (evidence?.schemaVersion === 2) {
+        const inventoryPath = path.resolve(cwd, `release/evidence/v${pkg.version}-image-inventory.json`);
+        const ref = evidence.provenance?.baseline?.ref;
+        if (!/^v\d+\.\d+\.\d+$/.test(ref ?? '')) throw new Error('Invalid published baseline tag');
+        const commit = readGitOutput(['rev-parse', `${ref}^{commit}`], cwd).trim();
+        const baselinePackage = JSON.parse(readGitOutput(['show', `${ref}:package.json`], cwd));
+        const baselineHashes = new Map();
+        const baselineFiles = new Set(readGitOutput(['ls-tree', '-r', '--name-only', ref], cwd).trim().split(/\r?\n/));
+        for (const sourcePath of sourcePaths) {
+            if (!baselineFiles.has(sourcePath)) {
+                // Explicit absence is checked against the published tree, not inferred from a failed read.
+                baselineHashes.set(sourcePath, null);
+                continue;
+            }
+            const bytes = execFileSync('git', ['show', `${ref}:${sourcePath}`], { cwd });
+            baselineHashes.set(sourcePath, createHash('sha256').update(bytes).digest('hex'));
+        }
+        comparisonState = {
+            inventory: await readJson(inventoryPath),
+            inventorySha256: createHash('sha256').update((await readFile(inventoryPath, 'utf8')).replaceAll('\r\n', '\n')).digest('hex'),
+            baseline: { commit, version: baselinePackage.version, sourceHashes: baselineHashes }
+        };
+    }
+    return {
+        version: pkg.version,
+        sourceHashes,
+        releasePackage: await loadReleasePackage(latestExtensionPath),
+        outOfScopeChangedFiles,
+        ...comparisonState
+    };
+}
+
+export async function checkImageReleaseEvidence({
+    evidence = null,
+    current = null,
+    evidencePath = null,
+    packageJsonPath = path.resolve('package.json'),
+    latestExtensionPath = path.resolve('release/latest-extension.json'),
+    sourcePaths = IMAGE_RELEASE_SOURCE_PATHS,
+    baseTag = null,
+    changedFiles = null,
+    quiet = false,
+    cwd = process.cwd()
+} = {}) {
+    try {
+        const pkg = current ? null : await readJson(packageJsonPath);
+        const resolvedEvidencePath = evidencePath || path.resolve(
+            `release/evidence/v${current?.version || pkg.version}-image-quality.json`
+        );
+        const evidenceValue = evidence || await readJson(resolvedEvidencePath);
+        const currentValue = current || await loadCurrentState({
+            packageJsonPath,
+            latestExtensionPath,
+            sourcePaths,
+            baseTag,
+            changedFiles,
+            cwd,
+            evidence: evidenceValue
+        });
+        const result = verifyImageReleaseEvidence(evidenceValue, currentValue);
+        if (!quiet) {
+            console.log(`image release quality gate: ${result.ok ? 'pass' : 'fail'}`);
+            for (const blocker of result.blockers) console.error(`- ${blocker}`);
+            if (result.observations?.length) console.log(`Retained historical observations: ${result.observations.length} (not counted as fixed or verified originals)`);
+        }
+        return result;
+    } catch (error) {
+        const result = { ok: false, blockers: [`image-evidence-check-error:${error?.message || error}`] };
+        if (!quiet) {
+            console.log('image release quality gate: fail');
+            console.error(`- ${result.blockers[0]}`);
+        }
+        return result;
+    }
+}
+
+function parseArgs(argv) {
+    const parsed = {};
+    for (let index = 0; index < argv.length; index++) {
+        const arg = argv[index];
+        if (arg === '--evidence') parsed.evidencePath = path.resolve(argv[++index]);
+        else if (arg === '--base-tag') parsed.baseTag = argv[++index];
+        else if (arg === '--changed-files-json') parsed.changedFilesPath = path.resolve(argv[++index]);
+    }
+    return parsed;
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+    const args = parseArgs(process.argv.slice(2));
+    const changedFiles = args.changedFilesPath ? await readJson(args.changedFilesPath) : null;
+    const result = await checkImageReleaseEvidence({ ...args, changedFiles });
+    if (!result.ok) process.exitCode = 1;
+}

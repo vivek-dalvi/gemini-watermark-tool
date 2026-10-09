@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini Watermark Remover</title>
+  <meta name="description" content="Official site entry for Gemini Watermark Remover. The public website lives on geminiwatermarkremover.io.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://geminiwatermarkremover.io/">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f7f4;
+      --panel: rgba(255, 255, 255, 0.9);
+      --text: #142118;
+      --muted: #4c6254;
+      --line: rgba(20, 33, 24, 0.12);
+      --accent: #11795a;
+      --accent-strong: #0b5f46;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1712;
+        --panel: rgba(21, 31, 25, 0.88);
+        --text: #e7f1ea;
+        --muted: #9bb4a5;
+        --line: rgba(231, 241, 234, 0.12);
+        --accent: #54c293;
+        --accent-strong: #76d8aa;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(17, 121, 90, 0.16), transparent 40%),
+        linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0)),
+        var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    main {
+      width: min(760px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(17, 121, 90, 0.12);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.04;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .primary-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+
+    a.button:hover {
+      transform: translateY(-1px);
+    }
+
+    a.button.primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    a.button.primary:hover {
+      background: var(--accent-strong);
+    }
+
+    a.button.secondary {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .notes {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    code {
+      font-family: Consolas, "SFMono-Regular", monospace;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Public Entry</div>
+    <h1>Gemini Watermark Remover</h1>
+    <p>
+      项目官网已迁移到独立闭源站点。这个仓库保留 userscript 分发、本地调试资产，以及内部浏览器预览页，不再把根路径作为对外开发者预览站。
+    </p>
+
+    <div class="actions">
+      <div class="primary-actions">
+        <a class="button primary" href="https://geminiwatermarkremover.io/" target="_blank" rel="noopener noreferrer">前往官网</a>
+        <a class="button secondary" href="userscript/gemini-watermark-remover.user.js" target="_blank">安装 Userscript</a>
+        <a class="button secondary" href="./dev-preview.html">内部预览页</a>
+      </div>
+    </div>
+
+    <div class="notes">
+      <div>官网：<code>https://geminiwatermarkremover.io/</code></div>
+      <div>本地调试时，`pnpm dev` 仍会提供 userscript、probe 页面和内部预览页。</div>
+      <div>这个入口页保持 <code>noindex, nofollow</code>，避免与官网形成重复公开页面。</div>
+    </div>
+  </main>
+</body>
+</html>

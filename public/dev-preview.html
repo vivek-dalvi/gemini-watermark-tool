@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini Watermark Remover - 内部媒体预览</title>
+  <meta name="description" content="Internal image and video preview harness for the open-source Gemini watermark remover.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://geminiwatermarkremover.io/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg class='h-10 w-10 text-emerald-500' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l-1.9 5.8-5.8 1.9 5.8 1.9 1.9 5.8 1.9-5.8 5.8-1.9-5.8-1.9z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="dev-preview.css">
+  <script>
+    // The legacy i18n bootstrap used to strip `loading` from <body> once translations
+    // were applied. After retiring that module, nothing cleared the class and the
+    // page stayed at opacity:0 (blank). Clear it as soon as the DOM is parsed.
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.remove('loading');
+    });
+  </script>
+</head>
+<body class="bg-white text-gray-800 antialiased selection:bg-primary selection:text-white flex flex-col min-h-screen loading">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="h-10 w-10 text-emerald-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 3-1.9 5.8-5.8 1.9 5.8 1.9 1.9 5.8 1.9-5.8 5.8-1.9-5.8-1.9Z"></path>
+        </svg>
+        <div>
+          <a href="./" class="text-sm md:text-xl font-bold tracking-tight text-primary hover:text-primary-hover transition-colors">Gemini Watermark Remover</a>
+          <p class="text-xs text-gray-500">内部媒体预览 harness</p>
+        </div>
+      </div>
+      <nav class="flex gap-3 text-sm font-medium text-gray-600 items-center">
+        <a href="userscript/gemini-watermark-remover.user.js" target="_blank" class="hidden md:inline-block hover:text-primary transition-colors">Userscript</a>
+        <a href="https://geminiwatermarkremover.io/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">官网</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow bg-gray-50/50 pb-12">
+    <section class="pt-12 pb-8 text-center px-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
+        内部图片 / 视频去水印预览
+      </h1>
+      <p class="text-gray-500 max-w-2xl mx-auto mb-6 text-sm md:text-base">
+        选择图片会在本页对比处理结果，选择视频会进入本地视频处理流程。
+      </p>
+
+      <div class="max-w-xl mx-auto flex items-center justify-center gap-2 text-sm text-gray-500 bg-white border border-gray-200 rounded-full px-4 py-1.5 shadow-sm mb-8">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>这是保留的内部调试页，并非公开产品。</span>
+        <a href="https://geminiwatermarkremover.io/" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-700 hover:text-black underline underline-offset-2">前往官网</a>
+      </div>
+
+      <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div id="uploadArea" class="group relative flex flex-col items-center justify-center w-full h-56 hover:bg-gray-50 transition-colors cursor-pointer">
+          <div class="absolute inset-4 border-2 border-dashed border-gray-200 rounded-lg group-hover:border-gray-300 transition-colors pointer-events-none"></div>
+          <div class="flex flex-col items-center justify-center relative z-10">
+            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3 text-gray-500 group-hover:text-gray-700 group-hover:scale-105 transition-all duration-200">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <p class="mb-1 text-base font-medium text-gray-800">点击或拖拽文件到此处</p>
+            <p class="text-xs text-gray-400">支持多选 JPG, PNG, WebP；视频会进入视频流程</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime,video/*" multiple class="hidden" />
+        </div>
+      </div>
+    </section>
+
+    <section id="singlePreview" class="max-w-6xl mx-auto px-4" style="display: none;">
+      <div class="flex flex-col md:flex-row gap-6">
+        <div class="flex-1">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+            <div class="bg-gray-50/80 px-4 py-2.5 border-b border-gray-200 flex justify-between items-center">
+              <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                对比预览
+              </h3>
+              <div class="flex gap-4">
+                <span id="originalInfo" class="text-xs text-gray-500 font-mono"></span>
+                <span id="processedInfo" class="text-xs text-primary font-mono" style="display: none;"></span>
+              </div>
+            </div>
+
+            <div class="relative w-full flex-1 flex items-center justify-center bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iI2Y5ZmRmZCI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjZjJmMmYyIi8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNmMmYyZjIiLz48L3N2Zz4=')] select-none group min-h-[400px]">
+              <div id="comparisonContainer" class="relative mx-auto w-fit max-w-full">
+                <img id="originalImage" class="block w-auto h-auto max-w-full max-h-[65vh] object-contain object-right-bottom" draggable="false" />
+                <div id="processedOverlay" class="absolute top-0 left-0 h-full w-[50%] overflow-hidden border-r-[1.5px] border-white shadow-[1px_0_4px_rgba(0,0,0,0.15)] box-content z-10" style="display: none;">
+                  <img id="processedImage" class="block h-full max-w-none object-contain object-right-bottom" draggable="false" />
+                </div>
+                <div id="sliderHandle" class="absolute top-0 bottom-0 w-10 -ml-5 z-20 cursor-col-resize flex items-center justify-center group-hover:opacity-100 transition-opacity" style="left: 50%; display: none;">
+                  <div class="absolute w-7 h-7 bg-white rounded-full shadow-[0_1px_3px_rgba(0,0,0,0.2)] flex items-center justify-center border border-gray-100">
+                    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l-3 3 3 3m8-6l3 3-3 3"></path></svg>
+                  </div>
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-gray-700 text-xs font-medium px-2 py-0.5 rounded shadow-sm border border-gray-200 pointer-events-none z-30">处理后</div>
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs font-medium px-2 py-0.5 rounded shadow-sm border border-gray-200 pointer-events-none z-30">原图</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-64 lg:w-72 flex-shrink-0">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 sticky top-20">
+            <h4 class="text-sm font-semibold text-gray-900 mb-4">操作</h4>
+            <div class="space-y-2.5">
+              <button id="copyBtn" class="w-full py-2 px-4 bg-primary hover:bg-primary-hover active:scale-[0.98] text-white rounded-lg text-sm font-medium transition-transform duration-100 flex items-center justify-center gap-2 shadow-sm" style="display: none;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-1 10H8m4-3H8m1.5 6H8"></path></svg>
+                <span>复制结果</span>
+              </button>
+
+              <button id="downloadBtn" class="w-full py-2 px-4 bg-gray-900 hover:bg-black active:scale-[0.98] text-white rounded-lg text-sm font-medium transition-transform duration-100 flex items-center justify-center gap-2 shadow-sm" style="display: none;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>下载结果</span>
+              </button>
+
+              <button id="resetBtn" class="w-full py-2 px-4 bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 active:scale-[0.98] rounded-lg text-sm font-medium transition-transform duration-100 flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <span>更换文件</span>
+              </button>
+            </div>
+            <div id="statusMessage" class="mt-4 text-xs text-gray-500 min-h-[1.25rem]"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="multiPreview" class="max-w-6xl mx-auto px-4" style="display: none;">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="bg-gray-50/80 px-4 py-2.5 border-b border-gray-200 flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-semibold text-gray-700">批量预览</h3>
+            <p id="progressText" class="text-xs text-gray-500">处理进度: 0/0</p>
+          </div>
+          <button id="batchResetBtn" class="py-2 px-4 bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 active:scale-[0.98] rounded-lg text-sm font-medium transition-transform duration-100">
+            更换文件
+          </button>
+        </div>
+        <div id="imageList" class="batch-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-emerald-600 text-white py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-emerald-100 text-sm mb-4">
+        内部调试页仅用于本地快速验证，请以官网和 userscript 主流程为准。
+      </p>
+      <div class="text-sm font-medium">
+        <a href="https://allenkuo.medium.com/removing-gemini-ai-watermarks-a-deep-dive-into-reverse-alpha-blending-bbbd83af2a3f" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">去水印原理</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="loadingOverlay" class="fixed inset-0 bg-white/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center">
+    <div class="flex flex-col items-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+      <p class="text-gray-600 font-medium">正在处理...</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

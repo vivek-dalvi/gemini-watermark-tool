@@ -1,0 +1,56 @@
+name: 问题反馈 / Bug report
+description: 报告可复现的问题 / Report a reproducible problem
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请提供从 Gemini 直接下载的原始文件，方便准确复现问题。
+        Thanks for reporting. Please provide the original file downloaded directly from Gemini so the issue can be reproduced accurately.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述 / Problem description
+      description: 请说明实际结果和预期结果。 / Describe the actual and expected result.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 使用方式与版本 / Usage method and version
+      description: 例如官网、Chrome 扩展、Userscript 或 CLI，以及准确版本号。 / For example website, Chrome extension, userscript, or CLI, including the exact version.
+      placeholder: "Chrome extension 1.0.31"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤 / Reproduction steps
+      description: 请按顺序说明如何触发问题。 / List the steps that reproduce the problem.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: upload
+    id: original-file
+    attributes:
+      label: Gemini 原始文件 / Original Gemini file
+      description: 请上传从 Gemini 直接下载的文件。截图、裁剪、压缩或转格式文件不能代替原文件；无法直接上传时可打包为 ZIP。 / Upload the file downloaded directly from Gemini. Screenshots, crops, compressed, or converted files are not substitutes; use a ZIP archive if needed.
+    validations:
+      required: true
+      accept: ".png,.jpg,.jpeg,.webp,.mp4,.mov,.webm,.zip"
+
+  - type: upload
+    id: result-file
+    attributes:
+      label: 处理结果或截图 / Processed result or screenshot
+      description: 可选。请上传处理后的文件或能说明问题的截图。 / Optional. Upload the processed file or a screenshot that shows the problem.
+    validations:
+      required: false
+      accept: ".png,.jpg,.jpeg,.webp,.mp4,.mov,.webm,.zip"

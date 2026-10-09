@@ -1,0 +1,207 @@
+{
+  "name": "@pilio/gemini-watermark-remover",
+  "description": "Automatically removes watermarks from Gemini AI generated images",
+  "version": "1.0.43",
+  "author": "GargantuaX",
+  "sideEffects": false,
+  "files": [
+    "bin/",
+    "skills/",
+    "src/cli/",
+    "src/core/",
+    "src/runtime/",
+    "src/sdk/",
+    "src/shared/",
+    "src/userscript/",
+    "dist/video-preview.html",
+    "dist/video-app.js",
+    "dist/models/allenk-fdncnn/onnx-manifest.json",
+    "dist/models/allenk-fdncnn/model_core_fp32_86x74.onnx",
+    "dist/models/allenk-fdncnn/model_core_fp32_104.onnx",
+    "dist/models/allenk-fdncnn/model_core_fp32_200.onnx",
+    "dist/onnxruntime/ort-wasm-simd-threaded.js",
+    "dist/onnxruntime/ort-wasm-simd-threaded.wasm",
+    "dist/onnxruntime/ort-wasm-simd-threaded.asyncify.mjs",
+    "dist/onnxruntime/ort-wasm-simd-threaded.asyncify.wasm",
+    "README.md",
+    "README_zh.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GargantuaX/gemini-watermark-remover.git"
+  },
+  "homepage": "https://geminiwatermarkremover.io/",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "gwr": "./bin/gwr.mjs"
+  },
+  "types": "./src/sdk/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/sdk/index.d.ts",
+      "import": "./src/sdk/index.js"
+    },
+    "./browser": {
+      "types": "./src/sdk/browser.d.ts",
+      "import": "./src/sdk/browser.js"
+    },
+    "./image-data": {
+      "types": "./src/sdk/image-data.d.ts",
+      "import": "./src/sdk/image-data.js"
+    },
+    "./node": {
+      "types": "./src/sdk/node.d.ts",
+      "import": "./src/sdk/node.js"
+    },
+    "./video": {
+      "types": "./src/sdk/video.d.ts",
+      "import": "./src/sdk/video.js"
+    },
+    "./runtime-browser": {
+      "types": "./src/runtime/browser.d.ts",
+      "import": "./src/runtime/browser.js"
+    },
+    "./runtime-userscript": {
+      "types": "./src/runtime/userscript.d.ts",
+      "import": "./src/runtime/userscript.js"
+    }
+  },
+  "scripts": {
+    "dev": "node build.js",
+    "build": "node build.js --prod",
+    "clean": "node scripts/clean.js",
+    "clean:all": "node scripts/clean.js --include-profile",
+    "convert:samples:webp": "node scripts/convert-samples-to-webp.js",
+    "diagnose:same-anchor-imperfection": "node scripts/run-same-anchor-imperfection-review.js",
+    "report:same-anchor-imperfection": "node scripts/summarize-same-anchor-imperfection-review.js",
+    "test": "node --test tests/**/*.test.js",
+    "test:serial": "node --test --test-concurrency=1 tests/**/*.test.js",
+    "test:sdk-smoke": "node --test tests/sdk/packageMetadata.test.js tests/sdk/packagePack.test.js tests/sdk/typeDeclarations.test.js tests/sdk/consumerRuntime.test.js tests/sdk/typescriptConsumer.test.js tests/sdk/smokeAutomation.test.js",
+    "probe:tm": "node scripts/tampermonkey-smoke.js run",
+    "probe:tm:freshness": "node scripts/tampermonkey-freshness.js",
+    "probe:tm:profile": "node scripts/open-tampermonkey-profile.js",
+    "probe:tm:setup": "node scripts/tampermonkey-smoke.js setup",
+    "probe:real-page:compare": "node scripts/real-page-pixel-compare.js",
+    "probe:real-page:copy-download": "node scripts/real-page-copy-download-probe.js",
+    "benchmark:samples": "node scripts/sample-benchmark.js",
+    "benchmark:userscript": "node scripts/userscript-benchmark.js",
+    "issue:verify": "node scripts/verify-github-issue.js",
+    "benchmark:online-sample:gate": "node scripts/gate-online-gemini-watermark-sample-benchmark.js",
+    "report:online-sample:remaining-audit": "node scripts/audit-online-tier-a-remaining.js",
+    "report:online-sample:remaining-taxonomy": "node scripts/create-online-sample-remaining-failure-taxonomy.js",
+    "report:online-sample:skipped-audit": "node scripts/audit-online-skipped-watermark-candidates.js",
+    "report:online-sample:quality-monitor": "node scripts/create-online-sample-quality-monitor.js",
+    "report:online-sample:quality-review": "node scripts/create-online-quality-review-pack.js",
+    "report:online-sample:quality-ablation": "node scripts/create-online-quality-ablation-report.js",
+    "report:online-sample:quality-ablation-review": "node scripts/create-online-quality-ablation-review-pack.js",
+    "report:online-sample:perfect-lost-github-compare": "node scripts/create-online-perfect-lost-github-compare.js",
+    "compare:allenk-v2": "node scripts/create-allenk-v2-comparison-report.js",
+    "release:image-validation": "node scripts/run-image-release-validation.js",
+    "release:image-evidence": "node scripts/create-image-release-evidence.js",
+    "release:image-quality-gate": "node scripts/check-image-release-evidence.js",
+    "release:readiness": "node scripts/create-release-readiness-report.js",
+    "release:quality-gate": "pnpm release:image-quality-gate && pnpm compare:allenk-v2 && pnpm release:readiness -- --scope image-defaults --fail-on-not-ready",
+    "release:goal-audit": "node scripts/create-release-goal-audit-report.js",
+    "release:ci-check": "node scripts/check-github-ci.js --workflow ci.yml --commit HEAD --fail-closed",
+    "release:distribution-check": "node scripts/check-release-distribution.js",
+    "release:preflight": "pnpm build && pnpm test && pnpm package:extension && pnpm release:quality-gate && pnpm release:goal-audit -- --fail-on-incomplete && pnpm release:ci-check",
+    "visible-residual:loop": "node scripts/run-visible-residual-loop.js",
+    "visible-residual:verify": "node scripts/verify-visible-residual-loop.js",
+    "visible-residual:validate-human-review": "node scripts/validate-visible-residual-human-review.js",
+    "visible-residual:create-gold-manifest": "node scripts/create-visible-residual-gold-manifest.js",
+    "visible-residual:review-status": "node scripts/report-visible-residual-review-progress.js",
+    "visible-residual:apply-focused-batch": "node scripts/apply-visible-residual-focused-review-batch.js",
+    "visible-residual:review-worksheet": "node scripts/create-visible-residual-review-worksheet.js",
+    "visible-residual:admission-report": "node scripts/create-visible-residual-admission-report.js",
+    "visible-residual:goal-audit": "node scripts/create-visible-residual-goal-audit-report.js",
+    "visible-residual:cluster-report": "node scripts/create-visible-residual-cluster-report.js",
+    "visible-residual:geometry-audit": "node scripts/audit-visible-residual-geometry.js",
+    "review:metric-mismatch": "node scripts/create-metric-mismatch-review-pack.js",
+    "probe:metric-48-alpha-profile": "node scripts/probe-metric-48-96-96-alpha-profile.js",
+    "probe:metric-48-localization": "node scripts/probe-metric-48-96-96-localization.js",
+    "review:metric-48-taxonomy": "node scripts/create-metric-48-96-96-failure-taxonomy.js",
+    "scan:sample-watermarks": "node scripts/scan-sample-watermarks.js",
+    "render:skipped-crops": "node scripts/render-skipped-candidate-crops.js",
+    "render:video-crops": "node scripts/render-video-crop-sheet.js",
+    "analyze:video-residual": "node scripts/analyze-video-residual.js",
+    "score:video-candidates": "node scripts/score-video-watermark-candidates.js",
+    "sweep:veo-text-cleanup": "node scripts/sweep-veo-text-cleanup.js",
+    "score:video-output-residual": "node scripts/score-video-output-residual.js",
+    "benchmark:video-crops": "node scripts/video-crop-benchmark.js",
+    "report:video-crops": "node scripts/report-video-crop-benchmark.js",
+    "diagnose:video-lowbody": "node scripts/diagnose-video-lowbody-regression.js",
+    "lab:video-frames": "node scripts/run-video-frame-backend-lab.js",
+    "lab:allenk-fdncnn-onnx-frames": "node scripts/run-allenk-fdncnn-onnx-frame-lab.js",
+    "lab:video-alpha-profile": "node scripts/run-video-alpha-profile-lab.js",
+    "lab:video-temporal-residual": "node scripts/run-video-temporal-residual-lab.js",
+    "fit:video-alpha-shape": "node scripts/fit-video-alpha-shape.js",
+    "gate:video-alpha-shape": "node scripts/gate-video-alpha-shape-candidates.js",
+    "gate:video-denoise": "node scripts/gate-video-denoise-candidates.js",
+    "gate:video-delivery": "node scripts/run-video-delivery-gate.js",
+    "report:video-alpha-policy-evidence": "node scripts/create-video-alpha-policy-evidence-report.js",
+    "report:video-frame-lab": "node scripts/report-video-frame-lab-sweep.js",
+    "report:video-review-pack": "node scripts/create-video-review-pack.js",
+    "report:video-review-index": "node scripts/create-video-review-index.js",
+    "report:video-review-screenshot": "node scripts/create-video-review-screenshot.js",
+    "report:video-review-thumbnail-sheet": "node scripts/create-video-review-thumbnail-sheet.js",
+    "report:video-dashboard-screenshot": "node scripts/create-video-review-screenshot.js --html .artifacts/video-delivery-dashboard/latest-video-dashboard.html --output .artifacts/video-delivery-dashboard/latest-video-dashboard.png --report .artifacts/video-delivery-dashboard/latest-video-dashboard-screenshot.json",
+    "report:video-review-decision": "node scripts/create-video-review-decision-report.js",
+    "report:video-acceptance-quickstart": "node scripts/create-video-acceptance-quickstart.js",
+    "report:video-pending-review-decision": "node scripts/create-video-pending-review-decision.js",
+    "report:video-alpha-policy-review-pack": "node scripts/create-video-alpha-policy-review-pack.js",
+    "report:video-light-polish-review-pack": "node scripts/create-video-light-polish-review-pack.js",
+    "report:video-polish-sweep-review-pack": "node scripts/create-video-polish-sweep-review-pack.js",
+    "report:video-delivery-dashboard": "node scripts/create-video-delivery-dashboard.js",
+    "report:video-goal-status": "node scripts/create-video-goal-status-report.js",
+    "report:video-delivery-bundle": "node scripts/create-video-delivery-bundle.js",
+    "verify:video-delivery-bundle": "node scripts/verify-video-delivery-bundle.js",
+    "export:video-backend": "node scripts/export-video-backend-variant.js",
+    "export:allenk-fdncnn-onnx-video": "node scripts/export-allenk-fdncnn-onnx-video.js",
+    "export:allenk-fdncnn-onnx-frame-video": "node scripts/export-allenk-fdncnn-onnx-frame-video.js",
+    "report:allenk-fdncnn-onnx-video-evidence": "node scripts/create-allenk-fdncnn-onnx-video-evidence.js",
+    "report:allenk-catalog-audit": "node scripts/create-allenk-catalog-audit.js",
+    "report:allenk-video-binary-analysis": "node scripts/create-allenk-video-binary-analysis.js",
+    "export:video-ui-preset": "node scripts/export-video-ui-preset.js",
+    "verify:video-ui-preset-output": "node scripts/verify-video-ui-preset-output.js",
+    "verify:video-ui-preset-batch": "node scripts/verify-video-ui-preset-batch.js",
+    "verify:video-regression-samples": "pnpm verify:video-ui-preset-batch -- --manifest tests/fixtures/video-regression-samples/gemini-video-regression-samples.json --output-dir .artifacts/video-regression-samples --no-screenshots --fail-on-residual",
+    "render:video-comparison-grid": "node scripts/render-video-comparison-grid.js",
+    "package:extension": "node scripts/package-extension-release.js",
+    "cli:smoke": "node bin/gwr.mjs --help",
+    "serve": "pnpm dlx serve dist",
+    "export:samples": "node scripts/export-fixed-samples.js",
+    "calibrate:preview-alpha": "node scripts/calibrate-preview-alpha.js",
+    "extract:allenk-fdncnn": "node scripts/extract-allenk-fdncnn-model.js",
+    "export:allenk-fdncnn-onnx": "node scripts/export-allenk-fdncnn-onnx.js",
+    "smoke:allenk-fdncnn-onnx-runtime": "node scripts/smoke-allenk-fdncnn-onnx-runtime.js",
+    "report:allenk-fdncnn-browser-spike": "node scripts/create-allenk-fdncnn-browser-spike-report.js",
+    "report:allenk-fdncnn-runtime-seam": "node scripts/create-allenk-fdncnn-runtime-seam-report.js"
+  },
+  "peerDependencies": {
+    "sharp": "^0.34.5 || ^0.35.0"
+  },
+  "peerDependenciesMeta": {
+    "sharp": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "esbuild": "^0.24.0",
+    "onnxruntime-web": "^1.26.0",
+    "playwright": "^1.58.2",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "dependencies": {
+    "mediabunny": "^1.46.0"
+  }
+}
