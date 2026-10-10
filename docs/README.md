@@ -2,6 +2,10 @@
 
 Welcome to the documentation for **DevCart Gemini Watermark Tool**, developed and maintained by **DevCart Technologies** and Lead Developer **Vivek Dalvi**.
 
+- **Official Live Application**: [https://geminiwm.devcart-technologies.in/](https://geminiwm.devcart-technologies.in/)
+- **GitHub Repository**: [https://github.com/vivek-dalvi/gemini-watermark-tool.git](https://github.com/vivek-dalvi/gemini-watermark-tool.git)
+- **Company Website**: [https://devcart-technologies.in/](https://devcart-technologies.in/)
+
 ## Table of Contents
 
 1. [Architecture Overview](#architecture-overview)

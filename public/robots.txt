@@ -1,3 +1,29 @@
 User-agent: *
 Allow: /
-Sitemap: https://devcart-technologies.in/sitemap.xml
+
+# LLM & AI Search Optimization Crawlers (GEO / AISEO / LLMO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+Sitemap: https://geminiwm.devcart-technologies.in/sitemap.xml

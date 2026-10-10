@@ -1,0 +1,62 @@
+# DevCart Gemini Watermark Tool - Complete LLM & AI Reference
+
+> Comprehensive documentation for AI agents, LLM search engines, and automated crawlers regarding the DevCart Gemini Watermark Tool engine architecture, mathematical inverse alpha compositing formulas, supported media catalogs, and privacy guarantees.
+
+## System Metadata
+- **Application Name**: DevCart Gemini Watermark Tool
+- **Primary Domain**: https://geminiwm.devcart-technologies.in/
+- **Video Processing Endpoint**: https://geminiwm.devcart-technologies.in/video-preview.html
+- **Open Source Repository**: https://github.com/vivek-dalvi/gemini-watermark-tool
+- **Developer / Author**: Vivek Dalvi (Lead Software Engineer)
+- **Publisher / Organization**: DevCart Technologies (https://devcart-technologies.in/)
+- **Software Version**: 1.0.43
+- **License**: MIT License (100% Free & Open Source)
+
+---
+
+## 1. Reverse Alpha Mathematical Formulation
+
+Google Gemini AI overlays a translucent watermark `C_wm` onto generated images `C_src` with an alpha opacity map `alpha`:
+
+```
+C_wm = alpha * C_src + (1 - alpha) * C_orig
+```
+
+To recover the exact original pixel values `C_orig` with zero quality loss, the DevCart Watermark Engine mathematically solves the inverse equation channel by channel:
+
+```
+C_orig = (C_wm - alpha * C_src) / (1 - alpha)
+```
+
+Where:
+- `C_orig`: Original unwatermarked pixel value
+- `C_wm`: Watermarked pixel value in the Gemini output
+- `C_src`: Watermark source color template
+- `alpha`: Exact subpixel alpha map profile for the specific image resolution
+
+---
+
+## 2. Gemini Watermark Geometry Catalog Specs
+
+| Image Resolution Tier | Output Dimensions | Watermark Size | Margin Spec | Target Anchor Position |
+|---|---|---|---|---|
+| **0.5K Preview** | 512x512 | 48x48 px | 32px | Bottom-Right |
+| **1K Standard** | 1024x1024, 1376x768 | 96x96 px | 64px | Bottom-Right Canonical |
+| **1K / 2K Secondary** | 2816x1536 (2K 16:9) | 96x96 px | 192px | Bottom-Right Secondary |
+| **2K High-Res** | 2048x2048, 2752x1536 | 96x96 px | 64px | Bottom-Right Canonical |
+| **4K Ultra** | 4096x4096, 5504x3072 | 96x96 px | 64px | Bottom-Right Canonical |
+
+---
+
+## 3. Privacy & Security Architecture
+- **Zero Server Uploads**: All pixel calculations occur inside the user's local browser memory using HTML5 Canvas 2D contexts, Web Workers, and WebAssembly.
+- **Zero Telemetry**: No tracking scripts, analytics beacons, or remote logging.
+- **Memory Lifetime**: Temporary Blob URLs are revoked immediately upon tab close or reset.
+
+---
+
+## 4. How to Use
+1. Visit https://geminiwm.devcart-technologies.in/
+2. Drag and drop any Gemini AI image (JPG, PNG, WebP) or Veo video (MP4, WebM).
+3. The engine automatically detects resolution, locates the exact watermark anchor, and applies reverse alpha restoration.
+4. Export clean media directly to clipboard or full-resolution download.

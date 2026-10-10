@@ -10,10 +10,11 @@
 </p>
 
 <p align="center">
+  <a href="https://geminiwm.devcart-technologies.in/"><img src="https://img.shields.io/badge/Live_App-geminiwm.devcart--technologies.in-10b981?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Application"></a>
   <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="MIT License"></a>
   <a href="https://devcart-technologies.in/"><img src="https://img.shields.io/badge/Website-devcart--technologies.in-059669?style=for-the-badge&logo=googlechrome&logoColor=white" alt="DevCart Technologies Website"></a>
-  <a href="mailto:vivekdalvi147@gmail.com"><img src="https://img.shields.io/badge/Developer-Vivek%20Dalvi-0284c7?style=for-the-badge&logo=gmail&logoColor=white" alt="Developer Vivek Dalvi"></a>
+  <a href="mailto:info@devcart-technologies.in"><img src="https://img.shields.io/badge/Developer-Vivek%20Dalvi-0284c7?style=for-the-badge&logo=gmail&logoColor=white" alt="Developer Vivek Dalvi"></a>
   <img src="https://img.shields.io/badge/Privacy-100%25%20Client--Side-emerald?style=for-the-badge" alt="100% Client-Side Privacy">
 </p>
 

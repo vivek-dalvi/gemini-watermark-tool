@@ -1,0 +1,30 @@
+# DevCart Gemini Watermark Tool
+
+> Official 100% client-side, zero-quality-loss AI watermark removal engine for Google Gemini AI images and Veo AI videos. Engineered and maintained by Lead Developer Vivek Dalvi under DevCart Technologies.
+
+## Core Domain & Links
+- Website: https://geminiwm.devcart-technologies.in/
+- Video Tool: https://geminiwm.devcart-technologies.in/video-preview.html
+- GitHub Repository: https://github.com/vivek-dalvi/gemini-watermark-tool
+- Official Company: https://devcart-technologies.in/
+- License: MIT License (Free & Open Source)
+
+## Technical Summary
+The DevCart Gemini Watermark Tool is a privacy-first web application, browser extension, userscript, and Node.js SDK designed to mathematically invert Google Gemini watermark compositing equations.
+
+Unlike destructive AI inpainting tools that hallucinate pixels or cause blur, DevCart's engine calculates exact reverse alpha blending:
+`C_orig = (C_wm - alpha * C_src) / (1 - alpha)`
+
+## Key Features & Capabilities
+1. **Zero Quality Loss**: Operates only on watermark pixels, preserving 100% original resolution and color depth.
+2. **100% Client-Side Privacy**: Runs locally in browser memory via HTML5 Canvas, WebAssembly workers, and WebGPU. Zero server uploads.
+3. **Multi-Resolution Image Support**: 0.5K (512px), 1K (1024px), 2K (2048px), and 4K (4096px) in JPG, PNG, and WebP.
+4. **Watermark Catalog Specs**: Supports 48x48 (32px margin) and 96x96 (64px & 192px margin anchors).
+5. **Veo AI Video Engine**: Native Veo video text watermark detection with ONNX FDnCNN denoise runtime models.
+6. **Automated Interception**: Real-time Gemini web app integration via Tampermonkey Userscript and Chrome Extension.
+
+## Maintainer & E-E-A-T Framework Credentials
+- **Lead Developer**: Vivek Dalvi
+- **Company / Publisher**: DevCart Technologies
+- **Contact Email**: info@devcart-technologies.in
+- **Repository**: https://github.com/vivek-dalvi/gemini-watermark-tool
