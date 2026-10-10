@@ -270,6 +270,59 @@
       </div>
     </section>
 
+    <!-- FEATURED MEDIA VIDEO SHOWCASE SECTION -->
+    <section id="showcase" class="py-10 relative border-t border-gray-800/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-brand-500/30 shadow-2xl overflow-hidden relative">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Video Showcase Column -->
+            <div class="lg:col-span-7 relative group rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-black">
+              <video 
+                id="heroShowcaseVideo"
+                src="devcart-video.mp4" 
+                autoplay 
+                muted 
+                playsinline 
+                class="w-full h-auto max-h-[420px] object-cover rounded-2xl transition-transform duration-500 group-hover:scale-[1.01]"
+              ></video>
+              <div class="absolute top-3 left-3 bg-black/75 backdrop-blur-md border border-brand-500/40 px-3 py-1 rounded-xl text-[11px] font-mono font-bold text-brand-300 flex items-center gap-2 pointer-events-none">
+                <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+                <span>DevCart Veo Video Engine</span>
+              </div>
+              <button id="replayShowcaseVideoBtn" type="button" title="Replay Video" class="absolute bottom-3 right-3 bg-black/75 hover:bg-brand-600 backdrop-blur-md text-white border border-gray-700 hover:border-brand-400 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <span>Replay Showcase</span>
+              </button>
+            </div>
+
+            <!-- Showcase Content Column -->
+            <div class="lg:col-span-5 space-y-4 text-left">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-mono font-bold">
+                <span>AI Video & Image Precision</span>
+              </div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                Pristine Watermark Removal for <span class="gradient-text">Veo & Gemini</span>
+              </h3>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                Watch the DevCart Watermark Engine automatically process and clean Gemini AI media in real time. Mathematical inverse alpha channel restoration preserves 100% pixel fidelity with zero generation artifacts.
+              </p>
+              <div class="pt-2 flex flex-wrap items-center gap-3">
+                <a href="#processor" class="px-5 py-2.5 text-xs font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-xl transition-all shadow-md flex items-center gap-2">
+                  <span>Try Image Processor</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+                <a href="video-preview.html" class="px-5 py-2.5 text-xs font-bold text-gray-200 glass-panel hover:bg-white/10 rounded-xl transition-all border border-gray-700 flex items-center gap-2">
+                  <span>Open Video Tool</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- INTERACTIVE WATERMARK PROCESSOR SECTION -->
     <section id="processor" class="py-16 relative">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

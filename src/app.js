@@ -323,10 +323,47 @@ async function init() {
         setupViewModes();
         setupEventListeners();
         setupSlider();
+        initHeroShowcaseVideo();
         await consumePendingImageHandoff();
     } catch (error) {
         hideLoading();
         console.error('initialize error:', error);
+    }
+}
+
+function initHeroShowcaseVideo() {
+    const video = document.getElementById('heroShowcaseVideo');
+    const replayBtn = document.getElementById('replayShowcaseVideoBtn');
+
+    if (video) {
+        video.muted = true;
+        video.volume = 0;
+        video.playsInline = true;
+        video.loop = false; // Plays once on page load
+
+        video.play().catch(() => {
+            // Autoplay fallback if browser blocks
+        });
+
+        video.addEventListener('click', () => {
+            if (video.paused || video.ended) {
+                video.currentTime = 0;
+                video.play().catch(console.error);
+            } else {
+                video.pause();
+            }
+        });
+    }
+
+    if (replayBtn && video) {
+        replayBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            video.currentTime = 0;
+            video.muted = true;
+            video.volume = 0;
+            video.play().catch(console.error);
+            showToast('Replaying showcase video', '🎬');
+        });
     }
 }
 

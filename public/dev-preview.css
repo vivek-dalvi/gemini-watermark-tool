@@ -389,36 +389,137 @@ html.theme-midnight #uploadArea {
   background-color: rgba(12, 16, 22, 0.8) !important;
 }
 
+/* Pristine High-Contrast Light Mode */
 html.theme-light body {
   background-color: #f8fafc !important;
   color: #0f172a !important;
 }
 html.theme-light .glass-panel {
-  background: rgba(255, 255, 255, 0.94) !important;
-  border-color: rgba(226, 232, 240, 0.9) !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.03) !important;
 }
 html.theme-light .glass-nav {
-  background: rgba(255, 255, 255, 0.94) !important;
-  border-bottom-color: rgba(226, 232, 240, 0.9) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: rgba(203, 213, 225, 0.8) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
 }
 html.theme-light #uploadArea {
-  background-color: #ffffff !important;
+  background-color: #f8fafc !important;
   border-color: #cbd5e1 !important;
 }
-html.theme-light .text-white {
+html.theme-light #uploadArea:hover {
+  background-color: #ffffff !important;
+  border-color: #059669 !important;
+}
+
+/* Preserve White Text inside Dark/Colored Buttons & Badges */
+html.theme-light .bg-brand-600,
+html.theme-light .bg-brand-500,
+html.theme-light .bg-brand-700,
+html.theme-light .bg-gray-800,
+html.theme-light .bg-gray-900,
+html.theme-light .bg-black,
+html.theme-light button.bg-brand-600,
+html.theme-light a.bg-brand-600,
+html.theme-light .badge-white {
+  color: #ffffff !important;
+}
+html.theme-light .bg-brand-600 .text-white,
+html.theme-light .bg-brand-500 .text-white,
+html.theme-light .bg-gray-800 .text-white,
+html.theme-light .bg-gray-900 .text-white,
+html.theme-light .bg-black .text-white,
+html.theme-light button .text-white,
+html.theme-light a.bg-brand-600 span,
+html.theme-light a.bg-brand-600 svg {
+  color: #ffffff !important;
+  fill: currentColor;
+}
+
+/* Light Mode Text Contrast Rules for Headings & Body */
+html.theme-light h1,
+html.theme-light h2,
+html.theme-light h3,
+html.theme-light h4,
+html.theme-light h5,
+html.theme-light h6,
+html.theme-light .text-white:not(button *):not(a.bg-brand-600 *):not(.bg-brand-600 *):not(.bg-gray-800 *):not(.bg-gray-900 *):not(.bg-black *) {
   color: #0f172a !important;
 }
+
 html.theme-light .text-gray-400,
-html.theme-light .text-gray-300 {
-  color: #475569 !important;
+html.theme-light .text-gray-300,
+html.theme-light .text-gray-200 {
+  color: #334155 !important;
 }
-html.theme-light .bg-darkpanel {
+
+html.theme-light .text-gray-500 {
+  color: #64748b !important;
+}
+
+/* High Contrast Emerald for Accents & Icons in Light Mode */
+html.theme-light .text-brand-400 {
+  color: #047857 !important;
+}
+html.theme-light .text-brand-300 {
+  color: #065f46 !important;
+}
+html.theme-light .bg-brand-500\/10 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #047857 !important;
+}
+html.theme-light .bg-brand-500\/10 svg {
+  color: #047857 !important;
+  stroke: #047857 !important;
+}
+
+html.theme-light .gradient-text {
+  background: linear-gradient(135deg, #059669 0%, #047857 50%, #2563eb 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html.theme-light .bg-darkpanel,
+html.theme-light .bg-darkcard,
+html.theme-light .bg-darkbg {
   background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
 }
+
 html.theme-light .border-gray-800,
 html.theme-light .border-gray-700 {
-  border-color: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.theme-light table thead {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+html.theme-light table tbody tr {
+  border-bottom-color: #e2e8f0 !important;
+}
+html.theme-light table td {
+  color: #334155 !important;
+}
+
+html.theme-light #privacyModal .glass-panel,
+html.theme-light #aboutModal .glass-panel {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.theme-light footer {
+  background-color: #f1f5f9 !important;
+  border-top-color: #e2e8f0 !important;
+}
+
+html.theme-light .toast-notice {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* High-Precision Interactive Animations */
