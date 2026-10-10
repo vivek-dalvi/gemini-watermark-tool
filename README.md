@@ -27,7 +27,7 @@
 
 Unlike conventional online watermark tools that use destructive AI inpainting or blur passes (which destroy details and hallucinate fake pixels), this tool performs exact **mathematical inverse alpha channel recovery**. By solving the original compositing equation in reverse ($C_{\text{orig}} = \frac{C_{\text{wm}} - \alpha \cdot C_{\text{src}}}{1 - \alpha}$), the software restores the underlying original pixel values with **zero quality loss**.
 
-- **Live Web Application**: [https://geminiwm.devcart-technologies.in/] https://geminiwm.devcart-technologies.in
+- **Live Web Application**: [https://geminiwm.devcart-technologies.in/] (https://geminiwm.devcart-technologies.in)
 - **Repository**: [https://github.com/vivek-dalvi/gemini-watermark-tool.git](https://github.com/vivek-dalvi/gemini-watermark-tool.git)
 - **License**: MIT License (Permissive, 100% Free for personal and commercial use)
 - **Lead Developer**: Vivek Dalvi ([LinkedIn Profile](https://www.linkedin.com/in/vivek-dalvi-65923940b) | [vivekdalvi147@gmail.com](mailto:vivekdalvi147@gmail.com))
