@@ -114,7 +114,7 @@ test('production build should emit a MV3 extension that packages the shared user
   const popupHtml = await readText('dist/extension/popup.html');
   assert.match(popupHtml, /<html lang="en">/);
   assert.match(popupHtml, /https:\/\/geminiwatermarkremover\.io\//);
-  assert.match(popupHtml, /https:\/\/pilio\.ai\/image-watermark-remover/);
+  assert.match(popupHtml, /https:\/\/devcart\.ai\/image-watermark-remover/);
   assert.match(popupHtml, /Online Gemini watermark remover/);
   assert.match(popupHtml, /Remove any image watermark/);
   assert.match(popupHtml, /Report an issue on GitHub/);

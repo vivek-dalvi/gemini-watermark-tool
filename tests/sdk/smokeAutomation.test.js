@@ -29,6 +29,6 @@ test('repository should ship a minimal TypeScript sdk consumer example', async (
     await access(consumerUrl, fsConstants.F_OK);
 
     const consumerSource = await readFile(consumerUrl, 'utf8');
-    assert.match(consumerSource, /from '@pilio\/gemini-watermark-remover'/);
-    assert.match(consumerSource, /from '@pilio\/gemini-watermark-remover\/node'/);
+    assert.match(consumerSource, /from '@devcart\/gemini-watermark-remover'/);
+    assert.match(consumerSource, /from '@devcart\/gemini-watermark-remover\/node'/);
 });

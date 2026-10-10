@@ -15,14 +15,14 @@ test('extractChromeUpdateVersion reads the extension update version', () => {
 test('extractSiteRuntimeVersion accepts only a self-consistent bundled SDK manifest', () => {
   assert.equal(extractSiteRuntimeVersion({
     schemaVersion: 1,
-    packageName: '@pilio/gemini-watermark-remover',
+    packageName: '@devcart/gemini-watermark-tool',
     declaredVersion: '1.0.33',
     bundledVersion: '1.0.33'
   }), '1.0.33');
 
   assert.equal(extractSiteRuntimeVersion({
     schemaVersion: 1,
-    packageName: '@pilio/gemini-watermark-remover',
+    packageName: '@devcart/gemini-watermark-tool',
     declaredVersion: '1.0.33',
     bundledVersion: '1.0.31'
   }), null);

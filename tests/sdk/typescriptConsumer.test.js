@@ -9,7 +9,7 @@ const ROOT_DIR = process.cwd();
 test('packed sdk should compile in an isolated TypeScript consumer with public runtime subpaths', async () => {
     const tempDir = await mkdtemp(path.join(os.tmpdir(), 'wm-ts-consumer-'));
     const nodeModulesDir = path.join(tempDir, 'node_modules');
-    const packageRoot = path.join(nodeModulesDir, '@pilio', 'gemini-watermark-remover');
+    const packageRoot = path.join(nodeModulesDir, '@devcart', 'gemini-watermark-remover');
     const tarballDir = path.join(tempDir, 'packed');
     const tsconfigPath = path.join(tempDir, 'tsconfig.json');
     const consumerEntry = path.join(tempDir, 'consumer.ts');
@@ -32,7 +32,7 @@ test('packed sdk should compile in an isolated TypeScript consumer with public r
         ...examplePackageJson,
         dependencies: {
             ...examplePackageJson.dependencies,
-            '@pilio/gemini-watermark-remover': 'file:./node_modules/@pilio/gemini-watermark-remover'
+            '@devcart/gemini-watermark-tool': 'file:./node_modules/@devcart/gemini-watermark-tool'
         }
     }, null, 2), 'utf8');
 

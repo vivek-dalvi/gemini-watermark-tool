@@ -41,7 +41,7 @@ function openHandoffDb() {
     return new Promise((resolve, reject) => {
         const indexedDb = globalThis.indexedDB;
         if (!indexedDb) {
-            reject(new Error('当前浏览器不支持本地文件暂存，请直接打开目标调试页后重新选择文件。'));
+            reject(new Error('Current browser does not support local file handoff, please open the target debug page and select the file again.'));
             return;
         }
 
@@ -52,14 +52,14 @@ function openHandoffDb() {
                 db.createObjectStore(STORE_NAME, { keyPath: 'id' });
             }
         };
-        request.onerror = () => reject(request.error || new Error('无法打开本地文件暂存。'));
+        request.onerror = () => reject(request.error || new Error('Unable to open local file handoff.'));
         request.onsuccess = () => resolve(request.result);
     });
 }
 
 export async function saveDebugFileHandoff(file, targetKind = getDebugFileKind(file)) {
     if (!file || !targetKind) {
-        throw new Error('不支持的文件类型。');
+        throw new Error('Unsupported file type.');
     }
 
     const record = {
@@ -77,8 +77,8 @@ export async function saveDebugFileHandoff(file, targetKind = getDebugFileKind(f
         const transaction = db.transaction(STORE_NAME, 'readwrite');
         transaction.objectStore(STORE_NAME).put(record);
         transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error || new Error('本地文件暂存失败。'));
-        transaction.onabort = () => reject(transaction.error || new Error('本地文件暂存已取消。'));
+        transaction.onerror = () => reject(transaction.error || new Error('Local file handoff failed.'));
+        transaction.onabort = () => reject(transaction.error || new Error('Local file handoff canceled.'));
     }).finally(() => db.close());
     return record;
 }
@@ -99,10 +99,10 @@ export async function consumeDebugFileHandoff(expectedKind = null) {
                 store.delete(LATEST_KEY);
             }
         };
-        request.onerror = () => reject(request.error || new Error('读取本地文件暂存失败。'));
+        request.onerror = () => reject(request.error || new Error('Failed to read local file handoff.'));
         transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error || new Error('读取本地文件暂存失败。'));
-        transaction.onabort = () => reject(transaction.error || new Error('读取本地文件暂存已取消。'));
+        transaction.onerror = () => reject(transaction.error || new Error('Failed to read local file handoff.'));
+        transaction.onabort = () => reject(transaction.error || new Error('Local file handoff reading canceled.'));
     }).finally(() => db.close());
 
     return matchedRecord;

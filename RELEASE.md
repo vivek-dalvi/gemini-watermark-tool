@@ -75,9 +75,9 @@ Expected result:
 ## Downstream Dependency Sync
 
 - Check downstream projects for a direct package dependency before bumping them:
-  `rg -n "@pilio/gemini-watermark-remover" --glob package.json --glob pnpm-lock.yaml`
+  `rg -n "@devcart/gemini-watermark-remover" --glob package.json --glob pnpm-lock.yaml`
 - Do not treat task routes, processor keys, i18n copy, tests, or docs mentioning `gemini-watermark-remover` as evidence that the npm SDK must be bumped.
-- Only update a downstream project when it directly depends on `@pilio/gemini-watermark-remover`.
+- Only update a downstream project when it directly depends on `@devcart/gemini-watermark-remover`.
 - If a separate public website consumes the npm SDK, update that site's `package.json` / `pnpm-lock.yaml`, then rebuild, test, and deploy the site.
 
 Example GitHub Release command:
@@ -101,7 +101,7 @@ If you maintain a separate public website for the project, sync it after the Git
 1. Run the website's userscript build/sync command.
    - This rebuilds this upstream repository.
    - It copies `dist/userscript/gemini-watermark-remover.user.js` to `public/userscript/gemini-watermark-remover.user.js`.
-2. If the npm SDK was published for this release and the website still directly depends on it, update `@pilio/gemini-watermark-remover` to the released version and refresh `pnpm-lock.yaml`.
+2. If the npm SDK was published for this release and the website still directly depends on it, update `@devcart/gemini-watermark-remover` to the released version and refresh `pnpm-lock.yaml`.
 3. Download the exact Chrome extension fallback assets from the GitHub Release into the website project:
    - `gemini-watermark-remover-extension-v<version>.zip`
    - `gemini-watermark-remover-extension-v<version>.zip.sha256.txt`

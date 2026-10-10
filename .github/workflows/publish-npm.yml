@@ -45,7 +45,7 @@ jobs:
           package_name="$(node --input-type=module -e "import manifest from './package.json' with { type: 'json' }; process.stdout.write(manifest.name)")"
           version="$(node --input-type=module -e "import manifest from './package.json' with { type: 'json' }; process.stdout.write(manifest.version)")"
           tag="v${version}"
-          tarball="release/pilio-gemini-watermark-remover-${version}.tgz"
+          tarball="release/devcart-gemini-watermark-remover-${version}.tgz"
 
           if [[ -n "${RELEASE_EVENT_TAG}" && "${RELEASE_EVENT_TAG}" != "${tag}" ]]; then
             echo "Release tag ${RELEASE_EVENT_TAG} does not match package version ${tag}." >&2

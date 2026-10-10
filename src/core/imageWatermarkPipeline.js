@@ -173,7 +173,8 @@ export function runImageWatermarkPipeline({
         allowAdaptiveSearch,
         alphaGainCandidates: resolvedAlphaGainCandidates,
         alphaPriorityGains: resolvedAlphaPriorityGains,
-        selectCandidate
+        selectCandidate,
+        forceBestEffort: options.bestEffort === true
     });
     const hypotheses = Array.isArray(collection?.hypotheses)
         ? collection.hypotheses.slice(0, collection.hasSupplementalSourceWitness ? 6 : 5)

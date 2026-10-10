@@ -9,7 +9,7 @@ import {
 import { decodeImageDataInNode } from '../../scripts/sample-benchmark.js';
 
 test('package root should expose a stable sdk surface', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover');
+    const mod = await import('@devcart/gemini-watermark-tool');
 
     assert.equal(typeof mod.createWatermarkEngine, 'function');
     assert.equal(typeof mod.removeWatermarkFromImageData, 'function');
@@ -20,7 +20,7 @@ test('package root should expose a stable sdk surface', async () => {
 });
 
 test('removeWatermarkFromImageData should work without caller-provided alpha maps', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover');
+    const mod = await import('@devcart/gemini-watermark-tool');
     const engine = await mod.createWatermarkEngine();
     const alpha48 = await engine.getAlphaMap(48);
     const imageData = createPatternImageData(320, 320);
@@ -51,7 +51,7 @@ test('removeWatermarkFromImageData should work without caller-provided alpha map
 });
 
 test('removeWatermarkFromImageDataSync should work without caller-provided alpha maps', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover');
+    const mod = await import('@devcart/gemini-watermark-tool');
     const engine = await mod.createWatermarkEngine();
     const alpha48 = await engine.getAlphaMap(48);
     const imageData = createPatternImageData(320, 320);
@@ -74,7 +74,7 @@ test('removeWatermarkFromImageDataSync should work without caller-provided alpha
 });
 
 test('removeWatermarkFromImageDataSync should use the embedded 36-v2 profile by default', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover');
+    const mod = await import('@devcart/gemini-watermark-tool');
     const engine = await mod.createWatermarkEngine();
     const alpha36V2 = await engine.getAlphaMap('36-v2');
     const imageData = createPatternImageData(1376, 768);
@@ -102,7 +102,7 @@ test('removeWatermarkFromImageDataSync should use the embedded 36-v2 profile by 
 });
 
 test('removeWatermarkFromImageDataSync should include the gated issue101 outline variant by default', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover');
+    const mod = await import('@devcart/gemini-watermark-tool');
     const imageData = createPatternImageData(1728, 2464);
     const crop = await decodeImageDataInNode(path.resolve(
         'tests/fixtures/issue101-outline-light-portrait.png'
@@ -132,7 +132,7 @@ test('removeWatermarkFromImageDataSync should include the gated issue101 outline
 });
 
 test('removeWatermarkFromImageDataSync should include the gated issue101 dark-outline variant by default', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover');
+    const mod = await import('@devcart/gemini-watermark-tool');
     const imageData = createPatternImageData(2816, 1536);
     const crop = await decodeImageDataInNode(path.resolve(
         'tests/fixtures/issue101-outline-dark-landscape.png'

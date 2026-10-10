@@ -31,17 +31,15 @@ const jsBanner = `/*!
  */`;
 
 const userscriptBanner = `// ==UserScript==
-// @name         Gemini NanoBanana Watermark Remover
-// @name:zh-CN   Gemini NanoBanana 图片水印移除
-// @namespace    https://github.com/GargantuaX
+// @name         DevCart Gemini Watermark Tool
+// @namespace    https://github.com/vivek-dalvi
 // @version      ${pkg.version}
-// @description  Automatically removes watermarks from Gemini AI generated images
-// @description:zh-CN 自动移除 Gemini AI 生成图像中的水印
+// @description  Automatically removes watermarks from Gemini AI generated images and videos
 // @icon         https://www.google.com/s2/favicons?domain=gemini.google.com
-// @author       GargantuaX
+// @author       Vivek Dalvi (DevCart Technologies)
 // @license      MIT
-// @downloadURL  https://github.com/GargantuaX/gemini-watermark-remover/releases/latest/download/gemini-watermark-remover.user.js
-// @updateURL    https://github.com/GargantuaX/gemini-watermark-remover/releases/latest/download/gemini-watermark-remover.user.js
+// @downloadURL  https://github.com/vivek-dalvi/gemini-watermark-tool/releases/latest/download/gemini-watermark-remover.user.js
+// @updateURL    https://github.com/vivek-dalvi/gemini-watermark-tool/releases/latest/download/gemini-watermark-remover.user.js
 // @match        https://gemini.google.com/app
 // @match        https://gemini.google.com/app/*
 // @match        https://gemini.google.com/*
@@ -57,14 +55,14 @@ const userscriptBanner = `// ==UserScript==
 
 function createExtensionManifest({ profile = 'official' } = {}) {
   const isOfficial = profile === 'official';
-  const displayName = isOfficial ? 'Gemini Watermark Remover' : 'Gemini Watermark Remover Local';
+  const displayName = isOfficial ? 'DevCart Gemini Watermark Tool' : 'DevCart Gemini Watermark Tool Local';
   const manifest = {
     manifest_version: 3,
     name: displayName,
-    short_name: isOfficial ? 'GWR' : 'GWR Local',
+    short_name: isOfficial ? 'DevCart GWR' : 'DevCart GWR Local',
     version: pkg.version,
     description: isOfficial ? pkg.description : `${pkg.description} (local test build)`,
-    author: pkg.author,
+    author: 'Vivek Dalvi (DevCart Technologies)',
     icons: {
       16: 'assets/icon-16.png',
       32: 'assets/icon-32.png',

@@ -307,7 +307,7 @@
 
 ### SDK / CLI
 
-- Added the `@pilio/gemini-watermark-remover/video` SDK entrypoint for local video watermark removal with injectable processors and a Playwright-backed preview-page default.
+- Added the `@devcart/gemini-watermark-remover/video` SDK entrypoint for local video watermark removal with injectable processors and a Playwright-backed preview-page default.
 - Re-exported video helpers from the Node SDK and added CLI routing for `.mp4`, `.webm`, and `.mov` inputs.
 - Added CLI flags for video page selection, denoise backend selection, timeout control, and low-confidence export handling.
 
@@ -437,7 +437,7 @@
 ### Tooling
 
 - Updated package exports and published file allowlists so `pnpm pack` now includes the runtime entrypoints and their required shared implementation files.
-- Added isolated consumer smoke coverage that validates runtime subpath imports and rejects deep private imports from `@pilio/gemini-watermark-remover/src/...`.
+- Added isolated consumer smoke coverage that validates runtime subpath imports and rejects deep private imports from `@devcart/gemini-watermark-remover/src/...`.
 - Documented Chrome extension installation in both README files and added release checklist coverage for extension artifacts.
 
 ### Quality

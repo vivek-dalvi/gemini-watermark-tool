@@ -37,7 +37,7 @@ const REPO_ROOT_PATH = fileURLToPath(REPO_ROOT_URL);
 
 function getAlpha48() {
   if (!alpha48Promise) {
-    alpha48Promise = import('@pilio/gemini-watermark-remover/image-data')
+    alpha48Promise = import('@devcart/gemini-watermark-tool/image-data')
       .then((mod) => mod.createWatermarkEngine())
       .then((engine) => engine.getAlphaMap(48));
   }

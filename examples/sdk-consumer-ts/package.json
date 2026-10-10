@@ -6,7 +6,7 @@
     "check": "tsc --project tsconfig.json --pretty false"
   },
   "dependencies": {
-    "@pilio/gemini-watermark-remover": "file:../.."
+    "@devcart/gemini-watermark-remover": "file:../.."
   },
   "devDependencies": {
     "@types/node": "^24.6.0",

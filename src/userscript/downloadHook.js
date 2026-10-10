@@ -156,9 +156,9 @@ async function notifyActionCriticalFailure(onActionCriticalFailure, payload) {
   }
 }
 
-const DOWNLOAD_ACTION_LABEL_PATTERN = /(download|copy|下载|复制)/i;
-const COPY_ACTION_LABEL_PATTERN = /(copy|复制)/i;
-const EXPLICIT_DOWNLOAD_ACTION_LABEL_PATTERN = /(download|下载)/i;
+const DOWNLOAD_ACTION_LABEL_PATTERN = /(download|copy)/i;
+const COPY_ACTION_LABEL_PATTERN = /copy/i;
+const EXPLICIT_DOWNLOAD_ACTION_LABEL_PATTERN = /download/i;
 const INTENT_EVENT_TYPES = ['click', 'keydown'];
 const DEFAULT_INTENT_WINDOW_MS = 5000;
 const DEFAULT_DOWNLOAD_STICKY_WINDOW_MS = 30000;

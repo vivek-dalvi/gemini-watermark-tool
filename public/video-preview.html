@@ -1,31 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Gemini 视频水印本地处理 MVP</title>
+  <title>DevCart Gemini Video Watermark Tool</title>
+  <meta name="description" content="Local browser video watermark removal tool for Gemini and Veo AI generated videos by DevCart Technologies. Developed by Vivek Dalvi.">
+  <link rel="icon" type="image/jpeg" href="devcart-technologies-logo.jpg">
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f8fafc;
-      --panel: #ffffff;
-      --panel-2: #f1f5f9;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --border-hover: #cbd5e1;
-      --primary: #0f172a;
-      --primary-hover: #334155;
+      color-scheme: dark;
+      --bg: #090d16;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(16, 185, 129, 0.4);
+      --primary: #10b981;
+      --primary-hover: #059669;
       --accent: #10b981;
       --accent-hover: #059669;
       --danger: #ef4444;
       --warn: #f59e0b;
       --success: #10b981;
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 14px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -42,14 +44,14 @@
     h1 {
       margin: 0;
       font-size: 1.5rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.02em;
-      color: #0f172a;
+      color: #ffffff;
     }
     header p, .muted {
       margin: 4px 0 0;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     /* Layout */
@@ -60,7 +62,7 @@
     }
     header {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 24px;
       padding-bottom: 20px;
@@ -79,7 +81,7 @@
       background: var(--panel);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -90,18 +92,19 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border);
-      font-size: 0.95rem;
-      font-weight: 600;
-      background: #fcfcfd;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.02);
+      color: #ffffff;
     }
 
     /* Buttons */
     button, input, select { font: inherit; }
     button, .download-link {
-      height: 38px;
+      height: 42px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      background: var(--panel);
+      background: var(--panel-2);
       color: var(--text);
       padding: 0 16px;
       cursor: pointer;
@@ -109,14 +112,14 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 0.85rem;
       text-decoration: none;
       transition: all 0.15s ease;
       white-space: nowrap;
     }
     button:hover:not(:disabled), .download-link:hover:not([aria-disabled="true"]) {
-      background: #f8fafc;
+      background: rgba(255,255,255,0.1);
       border-color: var(--border-hover);
     }
     button:focus-visible, .download-link:focus-visible, input:focus-visible, select:focus-visible {
@@ -161,7 +164,7 @@
     .compare-player {
       position: relative;
       aspect-ratio: 16 / 9;
-      background: #e2e8f0;
+      background: #000000;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1px;
@@ -169,7 +172,7 @@
     .compare-pane {
       position: relative;
       overflow: hidden;
-      background: #0f172a;
+      background: #000000;
     }
     .compare-pane video {
       position: absolute;
@@ -188,13 +191,14 @@
       z-index: 6;
       border-radius: 6px;
       padding: 4px 10px;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(9, 13, 22, 0.85);
       backdrop-filter: blur(4px);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 800;
       pointer-events: none;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.05em;
+      border: 1px solid var(--border);
     }
     .empty {
       position: absolute;
@@ -202,12 +206,12 @@
       display: grid;
       place-items: center;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       text-align: center;
       padding: 24px;
       z-index: 4;
       pointer-events: none;
-      background: #f8fafc;
+      background: var(--panel);
     }
 
     /* Player Controls */
@@ -217,21 +221,21 @@
       align-items: center;
       gap: 16px;
       padding: 12px 20px;
-      background: #fcfcfd;
+      background: var(--panel);
       border-top: 1px solid var(--border);
     }
     .compare-controls .play-toggle {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       padding: 0;
       border-radius: 50%;
       border: 1px solid var(--border);
-      background: #fff;
+      background: var(--panel-2);
       color: var(--primary);
     }
     .compare-controls .play-toggle:hover:not(:disabled) {
       border-color: var(--primary);
-      background: #f8fafc;
+      background: rgba(255,255,255,0.1);
     }
     .play-toggle::before {
       content: "";
@@ -264,54 +268,51 @@
       height: 14px;
       border-radius: 50%;
       background: var(--primary);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
       transition: transform 0.1s;
     }
     input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
+      transform: scale(1.2);
     }
 
     .time-label {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-variant-numeric: tabular-nums;
       color: var(--text-muted);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: monospace;
       min-width: 44px;
       text-align: right;
     }
 
-    /* Right Side Layout */
     .side {
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
-    /* Dropzone */
     .dropzone {
-      border: 2px dashed #cbd5e1;
-      background: #f8fafc;
+      border: 2px dashed var(--border);
+      background: var(--panel);
       border-radius: var(--radius-lg);
-      padding: 28px 24px;
+      padding: 24px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
     }
     .dropzone:hover, .dropzone[data-dragging="true"] {
-      background: #f0fdf4;
+      background: rgba(16, 185, 129, 0.05);
       border-color: var(--accent);
     }
     .dropzone strong {
       display: block;
-      font-size: 1.05rem;
-      color: var(--text);
-      margin-bottom: 8px;
+      font-size: 1rem;
+      color: #ffffff;
+      margin-bottom: 6px;
     }
     .dropzone .muted {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
-    /* Controls Area */
     .controls {
       display: grid;
       gap: 16px;
@@ -319,80 +320,22 @@
     }
 
     .auto-summary {
-      background: #f8fafc;
+      background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 14px;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
     .auto-summary strong {
       display: block;
-      color: var(--text);
-      font-size: 0.95rem;
+      color: #ffffff;
+      font-size: 0.9rem;
       margin-bottom: 4px;
     }
 
-    .internal-controls {
-      display: none;
-    }
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-    label {
-      color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    label span {
-      color: var(--text-muted);
-      font-variant-numeric: tabular-nums;
-    }
+    .internal-controls { display: none; }
 
-    input[type="number"], select {
-      width: 100%;
-      height: 38px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
-      padding: 0 12px;
-      transition: border-color 0.15s;
-      font-size: 0.9rem;
-    }
-    input[type="number"]:hover, select:hover {
-      border-color: var(--border-hover);
-    }
-
-    .check {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      font-weight: normal;
-    }
-    .check input {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent);
-      cursor: pointer;
-      margin: 0;
-    }
-
-    .preset-row button {
-      width: 100%;
-      background: #f8fafc;
-      color: var(--text);
-      border-color: var(--border);
-      justify-content: flex-start;
-    }
-
-    /* Progress & Status */
     .progress {
       height: 6px;
       background: var(--panel-2);
@@ -413,14 +356,14 @@
       padding: 12px 16px;
       background: var(--panel-2);
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       border: 1px solid transparent;
+      font-family: monospace;
     }
-    .status[data-tone="error"] { color: var(--danger); background: #fef2f2; border-color: #fca5a5; }
-    .status[data-tone="warn"] { color: var(--warn); background: #fffbeb; border-color: #fcd34d; }
-    .status[data-tone="success"] { color: var(--success); background: #f0fdf4; border-color: #86efac; }
+    .status[data-tone="error"] { color: var(--danger); background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); }
+    .status[data-tone="warn"] { color: var(--warn); background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
+    .status[data-tone="success"] { color: var(--success); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
 
-    /* Metadata tables (dl) */
     dl {
       margin: 0;
       display: grid;
@@ -433,95 +376,97 @@
       align-items: center;
       gap: 12px;
       padding: 0 20px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       border-bottom: 1px solid var(--border);
     }
     dl div:last-child { border-bottom: none; }
     dt { color: var(--text-muted); }
     dd {
       margin: 0;
-      color: var(--text);
+      color: #ffffff;
       font-variant-numeric: tabular-nums;
+      font-family: monospace;
       overflow-wrap: anywhere;
     }
 
     .note {
-      padding: 16px 20px;
+      padding: 14px 20px;
       color: var(--text-muted);
-      font-size: 0.85rem;
-      background: #fcfcfd;
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.02);
       border-top: 1px solid var(--border);
     }
 
-    /* Responsive */
     @media (max-width: 1024px) {
       .layout { grid-template-columns: 1fr; }
       .shell { padding: 24px 0; }
-    }
-    @media (max-width: 640px) {
-      .shell { width: calc(100% - 32px); }
-      header { flex-direction: column; gap: 12px; }
-      .actions { grid-template-columns: 1fr; }
-      .actions .primary, .actions .download-link { grid-column: auto; }
-      dl div { grid-template-columns: 100px minmax(0, 1fr); }
     }
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
-      <div>
-        <h1>Gemini 视频水印本地处理 MVP</h1>
-        <p>WebCodecs + Mediabunny，文件只在浏览器内解码、逐帧处理、重新封装 MP4。</p>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="devcart-technologies-logo.jpg" alt="DevCart Technologies Logo" style="height: 40px; width: 40px; min-width: 40px; min-height: 40px; border-radius: 10px; object-fit: cover; flex-shrink: 0;">
+        <div>
+          <h1>DevCart Gemini Video Watermark Tool</h1>
+          <p>Local WebCodecs & Mediabunny AI video frame denoise engine by DevCart Technologies • Lead Developer: Vivek Dalvi</p>
+        </div>
       </div>
-      <p>当前范围：右下角 72px Gemini/Veo 风格水印；视频轨重编码，兼容音频轨自动透传。</p>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; color: #f3f4f6; text-decoration: none; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border); padding: 6px 12px; border-radius: 8px;">
+          <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a href="./" style="color: #10b981; font-weight: 700; text-decoration: none; font-size: 0.85rem;">← Image Portal</a>
+      </div>
     </header>
 
     <main class="layout">
-      <section class="workspace" aria-label="视频对比">
+      <section class="workspace" aria-label="Video Comparison">
         <div class="panel">
-          <div class="panel-head"><span>Before / After 对比</span><span id="progressText">等待视频</span></div>
+          <div class="panel-head"><span>Before / After Video Comparison</span><span id="progressText">Awaiting Video</span></div>
           <div id="comparePlayer" class="compare-player">
             <div class="compare-pane">
               <video id="originalVideo" playsinline preload="metadata"></video>
-              <span class="badge">Before</span>
-              <div id="originalEmpty" class="empty">选择或拖入图片 / 视频</div>
+              <span class="badge">BEFORE</span>
+              <div id="originalEmpty" class="empty">Select or drag & drop video file</div>
             </div>
             <div class="compare-pane">
               <video id="processedVideo" playsinline preload="metadata" muted></video>
-              <span id="afterBadge" class="badge" hidden>After</span>
-              <div id="processedEmpty" class="empty">导出完成后显示右侧对比</div>
+              <span id="afterBadge" class="badge" hidden>AFTER</span>
+              <div id="processedEmpty" class="empty">Clean exported video preview will render here</div>
             </div>
           </div>
           <div class="compare-controls">
-            <button id="playPauseBtn" class="play-toggle" type="button" data-playing="false" aria-label="播放" disabled></button>
-            <input id="scrubber" type="range" min="0" max="1000" value="0" aria-label="播放进度" disabled>
+            <button id="playPauseBtn" class="play-toggle" type="button" data-playing="false" aria-label="Play" disabled></button>
+            <input id="scrubber" type="range" min="0" max="1000" value="0" aria-label="Timeline Scrubber" disabled>
             <span id="timeLabel" class="time-label">0:00</span>
           </div>
         </div>
       </section>
 
-      <aside class="side" aria-label="处理设置">
+      <aside class="side" aria-label="Processing Options">
         <div id="dropzone" class="dropzone" data-dragging="false" role="button" tabindex="0">
-          <strong>选择文件</strong>
-          <span class="muted">视频会在本页处理，图片会回到单图对比页。10 秒 1080p MP4 样例最适合当前 MVP。</span>
+          <strong>Select Video File</strong>
+          <span class="muted">Supports MP4, WebM, MOV. Processed locally inside browser memory.</span>
           <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime,video/*" hidden>
         </div>
 
         <div class="panel">
-          <div class="panel-head">自动处理</div>
+          <div class="panel-head">Automated Processing</div>
           <div class="controls">
             <div id="autoPresetSummary" class="auto-summary">
-              <strong>AI 自动处理</strong>
-              <span>选择视频后自动检测水印，导出时使用本地 AI 模型清理。</span>
+              <strong>Local AI Video Engine</strong>
+              <span>Automatically detects watermark anchors and applies frame-by-frame denoise.</span>
             </div>
-            <div class="progress" aria-label="处理进度"><span id="progressBar"></span></div>
-            <div id="status" class="status" data-tone="info"></div>
+            <div class="progress" aria-label="Processing Progress"><span id="progressBar"></span></div>
+            <div id="status" class="status" data-tone="info">Ready</div>
             <div class="actions">
-              <button id="detectBtn" type="button">检测水印</button>
-              <button id="resetBtn" type="button">重置</button>
-              <button id="processBtn" class="primary" type="button">自动导出无水印视频</button>
-              <a id="downloadBtn" class="download-link" aria-disabled="true">下载结果</a>
+              <button id="detectBtn" type="button">Detect Watermark</button>
+              <button id="resetBtn" type="button">Reset</button>
+              <button id="processBtn" class="primary" type="button">Export Unwatermarked Video</button>
+              <a id="downloadBtn" class="download-link" aria-disabled="true">Download Result</a>
             </div>
             <div class="internal-controls" hidden>
               <span id="alphaGainValue">1.00</span>
@@ -529,18 +474,18 @@
               <input id="adaptiveAlpha" type="checkbox">
               <input id="highQualityCleanup" type="checkbox">
               <select id="denoiseBackend">
-                <option value="none">关闭</option>
-                <option value="canvas-edge-denoise">Canvas 边缘去噪</option>
-                <option value="canvas-edge-band-denoise">Canvas 边缘带去噪</option>
-                <option value="canvas-edge-core-denoise">Canvas 边缘核心去噪</option>
-                <option value="canvas-footprint-polish">Canvas 足迹抛光</option>
-                <option value="canvas-temporal-delta-stabilize">Canvas 时序 Delta 稳定</option>
-                <option value="canvas-temporal-match-delta-stabilize">Canvas 匹配 Delta 稳定</option>
-                <option value="canvas-temporal-stabilize">Canvas 时序稳定</option>
-                <option value="canvas-texture-repair">Canvas 纹理回填</option>
+                <option value="none">Disabled</option>
+                <option value="canvas-edge-denoise">Canvas Edge Denoise</option>
+                <option value="canvas-edge-band-denoise">Canvas Edge Band Denoise</option>
+                <option value="canvas-edge-core-denoise">Canvas Edge Core Denoise</option>
+                <option value="canvas-footprint-polish">Canvas Footprint Polish</option>
+                <option value="canvas-temporal-delta-stabilize">Canvas Temporal Delta Stabilize</option>
+                <option value="canvas-temporal-match-delta-stabilize">Canvas Temporal Match Delta Stabilize</option>
+                <option value="canvas-temporal-stabilize">Canvas Temporal Stabilize</option>
+                <option value="canvas-texture-repair">Canvas Texture Repair</option>
                 <option value="allenk-fdncnn-browser-spike">AI FDnCNN ONNX</option>
               </select>
-              <button id="relocatedReviewPresetBtn" type="button">迁移锚点复核预设</button>
+              <button id="relocatedReviewPresetBtn" type="button">Relocated Preset</button>
               <span id="edgeDenoiseStrengthValue">0.25</span>
               <input id="edgeDenoiseStrength" type="range" min="0" max="1" step="0.05">
               <span id="residualCleanupValue">1.50</span>
@@ -550,16 +495,16 @@
               <input id="allowLowConfidence" type="checkbox">
             </div>
           </div>
-          <div class="note">导出会重新编码视频轨，并在 MP4 支持原音频编码时透传音频轨。</div>
+          <div class="note">Maintains original audio tracks and video frame rates automatically.</div>
         </div>
 
         <div class="panel">
-          <div class="panel-head">视频信息</div>
+          <div class="panel-head">Video Metadata</div>
           <div id="metadata"></div>
         </div>
 
         <div class="panel">
-          <div class="panel-head">检测结果</div>
+          <div class="panel-head">Detection Result</div>
           <div id="detection"></div>
         </div>
       </aside>

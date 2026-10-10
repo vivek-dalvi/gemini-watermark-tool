@@ -80,8 +80,10 @@ body {
 }
 
 .logo-wrap img {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
 }
 
 .setting-group {

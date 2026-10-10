@@ -1,169 +1,812 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemini Watermark Remover</title>
-  <meta name="description" content="Official site entry for Gemini Watermark Remover. The public website lives on geminiwatermarkremover.io.">
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="https://geminiwatermarkremover.io/">
-  <style>
-    :root {
-      color-scheme: light dark;
-      --bg: #f4f7f4;
-      --panel: rgba(255, 255, 255, 0.9);
-      --text: #142118;
-      --muted: #4c6254;
-      --line: rgba(20, 33, 24, 0.12);
-      --accent: #11795a;
-      --accent-strong: #0b5f46;
-    }
+  <title>DevCart Gemini Watermark Tool – AI Image & Video Watermark Remover</title>
+  <meta name="description" content="Official DevCart Technologies tool to automatically remove watermarks from Gemini AI generated images and videos locally in your browser with zero quality loss. Developed and maintained by Vivek Dalvi.">
+  <meta name="author" content="Vivek Dalvi (DevCart Technologies)">
+  <meta name="keywords" content="DevCart Technologies, Gemini Watermark Tool, Vivek Dalvi, AI watermark remover, Gemini AI image watermark remover, reverse alpha blending, zero quality loss watermark removal">
+  <link rel="canonical" href="https://devcart-technologies.in/gemini-watermark-tool">
+  
+  <!-- Favicon and Brand Asset -->
+  <link rel="icon" type="image/jpeg" href="devcart-technologies-logo.jpg">
+  <link rel="apple-touch-icon" href="devcart-technologies-logo.jpg">
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f1712;
-        --panel: rgba(21, 31, 25, 0.88);
-        --text: #e7f1ea;
-        --muted: #9bb4a5;
-        --line: rgba(231, 241, 234, 0.12);
-        --accent: #54c293;
-        --accent-strong: #76d8aa;
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DevCart Gemini Watermark Tool – Professional AI Watermark Removal">
+  <meta property="og:description" content="Automatically remove watermarks from Gemini AI generated images and videos locally with pristine reverse alpha mathematical precision. Created by DevCart Technologies & Vivek Dalvi.">
+  <meta property="og:site_name" content="DevCart Technologies">
+  <meta property="og:url" content="https://devcart-technologies.in/gemini-watermark-tool">
+  <meta property="og:image" content="https://devcart-technologies.in/devcart-technologies-logo.jpg">
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DevCart Gemini Watermark Tool – AI Watermark Remover">
+  <meta name="twitter:description" content="100% client-side, zero quality loss watermark removal for Gemini AI images & videos by DevCart Technologies.">
+  <meta name="twitter:image" content="https://devcart-technologies.in/devcart-technologies-logo.jpg">
+
+  <!-- Tailwind CSS via CDN for styling & dev-preview compatibility -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              950: '#022c22',
+            },
+            darkbg: '#090d16',
+            darkpanel: '#111827',
+            darkcard: '#1f2937'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'Consolas', 'monospace']
+          }
+        }
       }
     }
-
-    * { box-sizing: border-box; }
-
+  </script>
+  <link rel="stylesheet" href="dev-preview.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(17, 121, 90, 0.16), transparent 40%),
-        linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0)),
-        var(--bg);
-      color: var(--text);
-      display: grid;
-      place-items: center;
-      padding: 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #090d16;
+      color: #f3f4f6;
     }
 
-    main {
-      width: min(760px, 100%);
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 32px;
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-nav {
+      background: rgba(9, 13, 22, 0.85);
       backdrop-filter: blur(12px);
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(17, 121, 90, 0.12);
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .gradient-text {
+      background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    h1 {
-      margin: 18px 0 12px;
-      font-size: clamp(32px, 5vw, 52px);
-      line-height: 1.04;
-    }
-
-    p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 16px;
-    }
-
-    .actions {
-      display: grid;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .primary-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    a.button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 14px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: transform 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
-    }
-
-    a.button:hover {
-      transform: translateY(-1px);
-    }
-
-    a.button.primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    a.button.primary:hover {
-      background: var(--accent-strong);
-    }
-
-    a.button.secondary {
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: transparent;
-    }
-
-    .notes {
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
-      display: grid;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    code {
-      font-family: Consolas, "SFMono-Regular", monospace;
-      font-size: 0.95em;
+    .glow-effect {
+      box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.25);
     }
   </style>
-</head>
-<body>
-  <main>
-    <div class="eyebrow">Public Entry</div>
-    <h1>Gemini Watermark Remover</h1>
-    <p>
-      项目官网已迁移到独立闭源站点。这个仓库保留 userscript 分发、本地调试资产，以及内部浏览器预览页，不再把根路径作为对外开发者预览站。
-    </p>
 
-    <div class="actions">
-      <div class="primary-actions">
-        <a class="button primary" href="https://geminiwatermarkremover.io/" target="_blank" rel="noopener noreferrer">前往官网</a>
-        <a class="button secondary" href="userscript/gemini-watermark-remover.user.js" target="_blank">安装 Userscript</a>
-        <a class="button secondary" href="./dev-preview.html">内部预览页</a>
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DevCart Gemini Watermark Tool",
+    "url": "https://devcart-technologies.in/gemini-watermark-tool",
+    "description": "Professional browser-based AI watermark removal tool for Gemini images and videos using mathematical reverse alpha blending.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All modern browsers (Windows, macOS, Linux, Android, iOS)",
+    "author": {
+      "@type": "Person",
+      "name": "Vivek Dalvi",
+      "email": "info@devcart-technologies.in"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DevCart Technologies",
+      "url": "https://devcart-technologies.in/",
+      "logo": "https://devcart-technologies.in/devcart-technologies-logo.jpg"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the DevCart Gemini Watermark Tool remove watermarks?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool uses precise mathematical inverse alpha blending to invert the composite watermark equation applied by Gemini AI, restoring original underlying pixel colors with zero generation loss."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my image data uploaded to a remote server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All image processing runs 100% locally in your browser using HTML5 Canvas and Web Assembly. Your files never leave your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who maintains the DevCart Gemini Watermark Tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool is engineered and maintained by Vivek Dalvi under the official DevCart Technologies brand."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="min-h-screen flex flex-col antialiased bg-darkbg text-gray-100 selection:bg-brand-500 selection:text-white">
+
+  <!-- TOP BAR NAVIGATION -->
+  <header class="sticky top-0 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Zone 1: Brand Wordmark -->
+      <a href="./" class="flex items-center gap-3 whitespace-nowrap shrink-0 group">
+        <img src="devcart-technologies-logo.jpg" alt="DevCart Technologies Logo" class="h-10 w-10 rounded-xl object-cover ring-2 ring-brand-500/30 group-hover:ring-brand-500 transition-all" style="width: 40px; height: 40px; min-width: 40px; min-height: 40px; flex-shrink: 0;">
+        <div class="flex flex-col">
+          <span class="text-base sm:text-lg font-extrabold tracking-tight text-white group-hover:text-brand-400 transition-colors">DevCart Technologies</span>
+          <span class="text-[11px] text-brand-400 font-medium font-mono">Gemini Watermark Tool</span>
+        </div>
+      </a>
+
+      <!-- Zone 2: Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-gray-300">
+        <a href="#processor" class="hover:text-brand-400 transition-colors whitespace-nowrap shrink-0">Processor</a>
+        <a href="video-preview.html" class="hover:text-brand-400 transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5">
+          <span>Video Tool</span>
+          <span class="text-[10px] bg-brand-500/20 text-brand-400 border border-brand-500/30 px-1.5 py-0.5 rounded font-mono font-bold">NEW</span>
+        </a>
+        <a href="#features" class="hover:text-brand-400 transition-colors whitespace-nowrap shrink-0">Features</a>
+        <a href="#how-it-works" class="hover:text-brand-400 transition-colors whitespace-nowrap shrink-0">How It Works</a>
+        <button id="openPrivacyModalBtn" type="button" class="hover:text-brand-400 transition-colors whitespace-nowrap shrink-0">Privacy</button>
+        <button id="openAboutModalBtn" type="button" class="hover:text-brand-400 transition-colors whitespace-nowrap shrink-0">About</button>
+      </nav>
+
+      <!-- Zone 3: Controls & Links -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Theme Toggle -->
+        <button id="themeToggleBtn" type="button" title="Switch Theme (Dark, Midnight, Light)" class="p-2 sm:px-3 sm:py-2 text-gray-300 hover:text-white rounded-xl border border-gray-700 hover:border-brand-500 transition-all flex items-center gap-1.5 text-xs font-semibold">
+          <span id="themeIcon">🌙</span>
+          <span id="themeName" class="hidden sm:inline">Dark</span>
+        </button>
+
+        <!-- GitHub Repo Link -->
+        <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" title="View Source on GitHub" class="p-2 sm:px-3 sm:py-2 text-gray-300 hover:text-white border border-gray-700 hover:border-brand-500 rounded-xl transition-all flex items-center gap-2 text-xs font-bold shrink-0">
+          <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+
+        <!-- Launch / Action Button -->
+        <a href="#processor" class="px-4 py-2 sm:px-5 sm:py-2.5 text-xs font-bold text-white bg-brand-600 hover:bg-brand-500 active:scale-95 rounded-xl transition-all shadow-lg shadow-brand-600/20 whitespace-nowrap shrink-0 flex items-center gap-1.5">
+          <span>Start Tool</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
       </div>
     </div>
+  </header>
 
-    <div class="notes">
-      <div>官网：<code>https://geminiwatermarkremover.io/</code></div>
-      <div>本地调试时，`pnpm dev` 仍会提供 userscript、probe 页面和内部预览页。</div>
-      <div>这个入口页保持 <code>noindex, nofollow</code>，避免与官网形成重复公开页面。</div>
-    </div>
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-grow">
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-14 pb-16 overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/30 via-darkbg to-darkbg"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <!-- Open Source & Rebranding Pill -->
+        <div class="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full glass-panel border-brand-500/30 text-brand-300 text-xs font-semibold mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+          <span>100% Free & Open Source under MIT License</span>
+          <span class="text-gray-500">·</span>
+          <span>By DevCart Technologies</span>
+          <span class="text-gray-500">·</span>
+          <span>Lead Developer Vivek Dalvi</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight max-w-4xl mx-auto mb-6">
+          Precision Watermark Removal for <span class="gradient-text">Gemini AI Media</span>
+        </h1>
+
+        <p class="text-base sm:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+          Restore original pixel clarity from Gemini AI generated images and videos using mathematical reverse alpha channel recovery. 100% client-side privacy, zero loss, and instant local execution.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
+          <a href="#processor" class="px-7 py-3.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-500 rounded-2xl shadow-xl shadow-brand-600/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2.5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+            <span>Process Images & Videos</span>
+          </a>
+          <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 text-sm font-bold text-gray-200 glass-panel hover:bg-white/10 rounded-2xl transition-all border border-gray-700 flex items-center gap-2.5">
+            <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>Star on GitHub</span>
+          </a>
+          <a href="video-preview.html" class="px-6 py-3.5 text-sm font-bold text-brand-300 glass-panel hover:bg-white/10 rounded-2xl transition-all border border-brand-500/40 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            <span>AI Video Tool</span>
+          </a>
+        </div>
+
+        <!-- Key Highlights -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div class="glass-panel p-4 rounded-2xl text-center">
+            <div class="text-2xl font-extrabold text-white font-mono">100%</div>
+            <div class="text-xs text-gray-400 mt-1 font-medium">Local Browser Processing</div>
+          </div>
+          <div class="glass-panel p-4 rounded-2xl text-center">
+            <div class="text-2xl font-extrabold text-brand-400 font-mono">0 Loss</div>
+            <div class="text-xs text-gray-400 mt-1 font-medium">Original Resolution Preserved</div>
+          </div>
+          <div class="glass-panel p-4 rounded-2xl text-center">
+            <div class="text-2xl font-extrabold text-white font-mono">Image & Video</div>
+            <div class="text-xs text-gray-400 mt-1 font-medium">Full Media Coverage</div>
+          </div>
+          <div class="glass-panel p-4 rounded-2xl text-center">
+            <div class="text-2xl font-extrabold text-brand-400 font-mono">MIT</div>
+            <div class="text-xs text-gray-400 mt-1 font-medium">Open Source License</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE WATERMARK PROCESSOR SECTION -->
+    <section id="processor" class="py-16 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-bold text-white tracking-tight mb-3">Interactive Watermark Processor</h2>
+          <p class="text-gray-400 text-sm max-w-xl mx-auto">
+            Select or drag and drop Gemini AI images (JPG, PNG, WebP) or video files below for instant local restoration.
+          </p>
+        </div>
+
+        <!-- Upload Drop Zone Card -->
+        <div class="glass-panel rounded-3xl p-8 max-w-4xl mx-auto border border-gray-800 shadow-2xl glow-effect mb-12">
+          <div id="uploadArea" class="group relative flex flex-col items-center justify-center w-full min-h-[220px] rounded-2xl border-2 border-dashed border-gray-700 hover:border-brand-500 bg-darkpanel/50 hover:bg-darkpanel transition-all cursor-pointer p-6 text-center">
+            <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime,video/*" multiple class="hidden" />
+            
+            <div class="w-16 h-16 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            </div>
+            
+            <h3 class="text-lg font-bold text-white mb-1">Click to Upload or Drag & Drop Media</h3>
+            <p class="text-xs text-gray-400 mb-3">Supports JPG, PNG, WebP images & MP4, WebM, MOV videos</p>
+            
+            <div class="inline-flex items-center gap-2 text-xs font-mono text-brand-400 bg-brand-950/60 border border-brand-800/50 px-3 py-1 rounded-lg">
+              <span>100% Client-Side Privacy • Zero Server Uploads</span>
+            </div>
+          </div>
+
+          <!-- Processing Steps Card (Animated on file add) -->
+          <div id="processingStepsCard" class="hidden glass-panel rounded-2xl p-5 border border-brand-500/40 max-w-xl mx-auto text-left space-y-3 mt-6 text-xs font-mono fade-in-scale">
+            <div class="flex items-center justify-between text-brand-300">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-400 animate-ping"></span>
+                <span id="processingStepText" class="font-bold">Analyzing media buffers...</span>
+              </div>
+              <span id="processingStepPercent" class="text-brand-400 font-bold">25%</span>
+            </div>
+            <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+              <div id="processingProgressBar" class="bg-brand-500 h-2 rounded-full transition-all duration-300 shadow-sm shadow-brand-500/50" style="width: 25%"></div>
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-gray-400 pt-1">
+              <span>Engine: Web Worker + Canvas</span>
+              <span>Precision: Reverse Alpha</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single Image Comparison View -->
+        <div id="singlePreview" class="max-w-6xl mx-auto" style="display: none;">
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- Comparison Container -->
+            <div class="lg:col-span-3 glass-panel rounded-3xl overflow-hidden border border-gray-800 flex flex-col">
+              <div class="bg-darkpanel px-6 py-4 border-b border-gray-800 flex flex-wrap gap-4 justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <span class="w-3 h-3 rounded-full bg-brand-500 animate-pulse"></span>
+                  <h3 class="text-sm font-bold text-white">Visual Comparison</h3>
+                </div>
+
+                <!-- View Mode Segmented Controls -->
+                <div class="flex items-center gap-1 p-1 bg-darkbg rounded-xl border border-gray-800">
+                  <button id="viewModeSlider" type="button" class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all bg-brand-600 text-white shadow-sm">Split Slider</button>
+                  <button id="viewModeSideBySide" type="button" class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-gray-400 hover:text-white">Side by Side</button>
+                  <button id="viewModeFlip" type="button" class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all text-gray-400 hover:text-white">Flip Toggle</button>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs font-mono text-gray-400">
+                  <span id="originalInfo">Original</span>
+                  <span id="processedInfo" class="text-brand-400" style="display: none;">Processed</span>
+                </div>
+              </div>
+
+              <!-- Main Interactive Viewport -->
+              <div class="relative w-full flex-1 flex items-center justify-center bg-gray-950 select-none p-4 min-h-[420px] overflow-hidden">
+                <!-- Scanning Beam Effect (Active during file load/processing) -->
+                <div id="scanlineEffect" class="scanline-active hidden"></div>
+
+                <!-- 1. Interactive Slider View (Default) -->
+                <div id="comparisonContainer" class="relative mx-auto w-fit max-w-full">
+                  <img id="originalImage" class="block w-auto h-auto max-w-full max-h-[60vh] object-contain rounded-xl" draggable="false" />
+                  <div id="processedOverlay" class="absolute top-0 left-0 h-full w-[50%] overflow-hidden border-r-2 border-brand-400 shadow-2xl z-10" style="display: none;">
+                    <img id="processedImage" class="block h-full max-w-none object-contain rounded-xl" draggable="false" />
+                  </div>
+                  <div id="sliderHandle" class="absolute top-0 bottom-0 w-10 -ml-5 z-20 cursor-col-resize flex items-center justify-center transition-opacity" style="left: 50%; display: none;">
+                    <div class="w-8 h-8 bg-brand-500 text-white rounded-full shadow-lg flex items-center justify-center ring-4 ring-darkbg">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l-3 3 3 3m8-6l3 3-3 3"></path></svg>
+                    </div>
+                  </div>
+                  <div id="sliderBadgeProcessed" class="absolute top-4 left-4 bg-darkbg/90 border border-brand-500/40 text-brand-400 text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-30">PROCESSED</div>
+                  <div id="sliderBadgeOriginal" class="absolute top-4 right-4 bg-darkbg/90 border border-gray-700 text-gray-300 text-xs font-bold px-3 py-1 rounded-lg pointer-events-none z-30">ORIGINAL</div>
+                </div>
+
+                <!-- 2. Side by Side View -->
+                <div id="sideBySideContainer" class="hidden w-full grid-cols-1 md:grid-cols-2 gap-4 max-w-full">
+                  <div class="relative bg-darkbg/70 rounded-2xl p-2 border border-gray-800 flex flex-col items-center">
+                    <span class="absolute top-3 left-3 bg-darkbg/90 border border-gray-700 text-gray-300 text-[11px] font-bold px-2 py-0.5 rounded-md z-10">ORIGINAL</span>
+                    <img id="sideBySideOriginal" class="w-auto h-auto max-w-full max-h-[55vh] object-contain rounded-xl" draggable="false" />
+                  </div>
+                  <div class="relative bg-darkbg/70 rounded-2xl p-2 border border-brand-500/30 flex flex-col items-center">
+                    <span class="absolute top-3 left-3 bg-brand-950/90 border border-brand-500/50 text-brand-400 text-[11px] font-bold px-2 py-0.5 rounded-md z-10">PROCESSED</span>
+                    <img id="sideBySideProcessed" class="w-auto h-auto max-w-full max-h-[55vh] object-contain rounded-xl" draggable="false" />
+                  </div>
+                </div>
+
+                <!-- 3. Flip Toggle View -->
+                <div id="flipContainer" class="hidden relative mx-auto w-fit max-w-full cursor-pointer group" title="Click to flip between Before and After">
+                  <img id="flipImage" class="block w-auto h-auto max-w-full max-h-[60vh] object-contain rounded-xl" draggable="false" />
+                  <div id="flipBadge" class="absolute top-4 left-4 bg-brand-950/90 border border-brand-500 text-brand-300 text-xs font-bold px-3 py-1 rounded-lg z-30">PROCESSED (CLICK TO FLIP)</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Control Actions Panel -->
+            <div class="lg:col-span-1">
+              <div class="glass-panel rounded-3xl p-6 border border-gray-800 sticky top-28 space-y-4">
+                <div class="flex items-center justify-between">
+                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Export Actions</h4>
+                  <span id="processedBadge" class="hidden px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-brand-500/20 text-brand-300 border border-brand-500/40">READY</span>
+                </div>
+                
+                <button id="copyBtn" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-brand-600/20 flex items-center justify-center gap-2" style="display: none;">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-1 10H8m4-3H8m1.5 6H8"></path></svg>
+                  <span>Copy Clean Image</span>
+                </button>
+
+                <button id="downloadBtn" class="w-full py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2" style="display: none;">
+                  <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                  <span>Download Clean Image</span>
+                </button>
+
+                <button id="resetBtn" class="w-full py-3 px-4 bg-transparent border border-gray-700 text-gray-300 hover:bg-gray-800 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                  <span>Select Another File</span>
+                </button>
+
+                <!-- Watermark Analysis Metric Card -->
+                <div id="watermarkAnalysisCard" class="hidden p-4 rounded-2xl bg-darkpanel/80 border border-gray-800 text-xs space-y-2 font-mono">
+                  <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Detection Matrix</div>
+                  <div class="flex items-center justify-between text-gray-400">
+                    <span>Resolution:</span>
+                    <span id="analysisRes" class="text-white font-bold">-</span>
+                  </div>
+                  <div class="flex items-center justify-between text-gray-400">
+                    <span>Watermark Anchor:</span>
+                    <span id="analysisAnchor" class="text-brand-400 font-bold">-</span>
+                  </div>
+                  <div class="flex items-center justify-between text-gray-400">
+                    <span>Alpha Engine:</span>
+                    <span class="text-emerald-400 font-semibold">Inverse Math</span>
+                  </div>
+                  <div class="flex items-center justify-between text-gray-400">
+                    <span>Execution Speed:</span>
+                    <span id="analysisTime" class="text-gray-200 font-bold">-</span>
+                  </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-800">
+                  <label class="flex items-center gap-3 cursor-pointer group">
+                    <div class="relative">
+                      <input type="checkbox" id="bestEffortMode" class="sr-only peer">
+                      <div class="w-10 h-5 bg-gray-700 rounded-full peer peer-checked:bg-brand-600 transition-colors"></div>
+                      <div class="absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform peer-checked:translate-x-5"></div>
+                    </div>
+                    <span class="text-xs font-bold text-gray-400 group-hover:text-gray-200 transition-colors">Best Effort Mode (Force)</span>
+                  </label>
+                  <p class="text-[10px] text-gray-500 mt-2 leading-tight">Enable if watermark is not detected automatically. Forces recovery across potential anchors.</p>
+                </div>
+
+                <div id="statusMessage" class="text-xs font-mono text-gray-400 pt-2 min-h-[1.5rem] border-t border-gray-800"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Multi-File Batch List View -->
+        <div id="multiPreview" class="max-w-6xl mx-auto" style="display: none;">
+          <div class="glass-panel rounded-3xl overflow-hidden border border-gray-800">
+            <div class="bg-darkpanel px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+              <div>
+                <h3 class="text-sm font-bold text-white">Batch Queue Overview</h3>
+                <p id="progressText" class="text-xs font-mono text-brand-400 mt-0.5">Processing progress: 0/0</p>
+              </div>
+              <button id="batchResetBtn" class="py-2 px-4 bg-gray-800 border border-gray-700 text-gray-200 hover:bg-gray-700 rounded-xl text-xs font-bold transition-all">
+                Change Files
+              </button>
+            </div>
+            <div id="imageList" class="batch-list p-6 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CORE FEATURES SECTION -->
+    <section id="features" class="py-20 border-t border-gray-800/80 bg-darkpanel/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+          <h2 class="text-xs font-extrabold uppercase tracking-widest text-brand-400 mb-2">Engine Architecture</h2>
+          <p class="text-3xl font-extrabold text-white tracking-tight">Built for Uncompromising Precision</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Feature 1 -->
+          <div class="glass-panel p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7hr6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Inverse Alpha Reconstruction</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Instead of destructive AI inpainting or blur passes, our core engine mathematically solves the exact alpha composition equations ($C_{orig} = (C_{wm} - \alpha \cdot C_{src}) / (1 - \alpha)$) to recover exact pixel values.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="glass-panel p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">100% Client-Side Privacy</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Your sensitive images and video media never leave your browser. All computations execute locally via high-performance HTML5 Canvas and WebAssembly workers.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="glass-panel p-8 rounded-3xl border border-gray-800 hover:border-brand-500/50 transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Image & Video Coverage</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Full automated detection and removal support for both Gemini static preview/full images (48x48, 96x96 watermark specs) and Veo video watermark overlays.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section id="how-it-works" class="py-20 border-t border-gray-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+          <h2 class="text-xs font-extrabold uppercase tracking-widest text-brand-400 mb-2">Workflow Guide</h2>
+          <p class="text-3xl font-extrabold text-white tracking-tight">Three Simple Steps to Clean Media</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="relative p-8 glass-panel rounded-3xl border border-gray-800">
+            <div class="text-4xl font-extrabold font-mono text-brand-400/40 mb-4">01.</div>
+            <h3 class="text-lg font-bold text-white mb-2">Input Media</h3>
+            <p class="text-gray-400 text-sm">
+              Select or drop your Gemini generated JPG, PNG, WebP image or MP4 video into the tool or run automatically on Gemini web app via Userscript / Extension.
+            </p>
+          </div>
+
+          <div class="relative p-8 glass-panel rounded-3xl border border-gray-800">
+            <div class="text-4xl font-extrabold font-mono text-brand-400/40 mb-4">02.</div>
+            <h3 class="text-lg font-bold text-white mb-2">Automatic Alpha Recovery</h3>
+            <p class="text-gray-400 text-sm">
+              The engine detects the image dimensions, locates the exact watermark anchor offset, and applies reverse alpha blending channel by channel.
+            </p>
+          </div>
+
+          <div class="relative p-8 glass-panel rounded-3xl border border-gray-800">
+            <div class="text-4xl font-extrabold font-mono text-brand-400/40 mb-4">03.</div>
+            <h3 class="text-lg font-bold text-white mb-2">Export Clean File</h3>
+            <p class="text-gray-400 text-sm">
+              Preview the pristine result with interactive side-by-side comparison, copy the clean image directly to clipboard, or download full-resolution files.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIFICATIONS SECTION -->
+    <section id="specifications" class="py-20 border-t border-gray-800/80 bg-darkpanel/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-xs font-extrabold uppercase tracking-widest text-brand-400 mb-2">Technical Matrix</h2>
+          <p class="text-3xl font-extrabold text-white tracking-tight">System Specifications & Specs</p>
+        </div>
+
+        <div class="glass-panel rounded-3xl overflow-hidden border border-gray-800 max-w-4xl mx-auto">
+          <table class="w-full text-left text-sm text-gray-300">
+            <thead class="bg-darkpanel text-xs uppercase text-brand-400 font-mono border-b border-gray-800">
+              <tr>
+                <th scope="col" class="px-6 py-4">Specification</th>
+                <th scope="col" class="px-6 py-4">Details</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/60">
+              <tr>
+                <td class="px-6 py-4 font-bold text-white">Supported Image Dimensions</td>
+                <td class="px-6 py-4 font-mono text-gray-400">0.5K (512px), 1K (1024px), 2K (2048px), 4K (4096px), custom aspect ratios</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-bold text-white">Watermark Catalog Specs</td>
+                <td class="px-6 py-4 font-mono text-gray-400">48x48 (32px margin), 96x96 (64px & 192px margin anchors)</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-bold text-white">Video Watermark Engine</td>
+                <td class="px-6 py-4 font-mono text-gray-400">Veo text watermark detection & ONNX FDnCNN denoise models</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-bold text-white">Execution Runtime</td>
+                <td class="px-6 py-4 font-mono text-gray-400">Node.js SDK, Browser Web Workers, Userscript (Tampermonkey), Chrome Extension</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-bold text-white">Security & Privacy</td>
+                <td class="px-6 py-4 font-mono text-brand-400">100% Client-side local memory execution. Zero telemetry.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="py-20 border-t border-gray-800/80">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-xs font-extrabold uppercase tracking-widest text-brand-400 mb-2">Help & Insights</h2>
+          <p class="text-3xl font-extrabold text-white tracking-tight">Frequently Asked Questions</p>
+        </div>
+
+        <div class="space-y-6">
+          <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+            <h3 class="text-lg font-bold text-white mb-2">What makes this tool different from generic watermark removers?</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Most online watermark removers use generic AI inpainting or content-aware fill, which blurs or invents fake details. DevCart Gemini Watermark Tool uses exact mathematical reverse alpha blending based on Gemini's specific watermark compositing formula, perfectly recovering the original pixel values behind the watermark.
+            </p>
+          </div>
+
+          <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+            <h3 class="text-lg font-bold text-white mb-2">Does this tool alter or downgrade the quality of my images?</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              No. The reverse alpha transformation acts only on the specific pixels containing the watermark composite. The remainder of your image is untouched, preserving 100% of the original resolution and color fidelity.
+            </p>
+          </div>
+
+          <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+            <h3 class="text-lg font-bold text-white mb-2">Can I run this automatically while browsing gemini.google.com?</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Yes. You can install our Tampermonkey Userscript or Chrome Extension. It automatically intercepts Gemini image downloads and preview displays in real-time.
+            </p>
+          </div>
+
+          <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+            <h3 class="text-lg font-bold text-white mb-2">Who maintains this open-source project?</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              This application is engineered and maintained by Vivek Dalvi under the official DevCart Technologies brand.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-20 border-t border-gray-800/80 bg-darkpanel/40">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <img src="devcart-technologies-logo.jpg" alt="DevCart Technologies Logo" class="w-20 h-20 rounded-3xl mx-auto mb-6 object-cover ring-4 ring-brand-500/30">
+        
+        <h2 class="text-3xl font-extrabold text-white tracking-tight mb-4">About DevCart Technologies</h2>
+        
+        <p class="text-gray-300 text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+          DevCart Technologies builds reliable, high-performance developer tools, browser extensions, and web utilities focused on efficiency, privacy, and technical accuracy.
+        </p>
+
+        <div class="glass-panel p-6 rounded-2xl max-w-xl mx-auto border border-gray-800 mb-8 text-left text-sm text-gray-300 space-y-2 font-mono">
+          <div><span class="text-brand-400 font-bold">Maintainer & Developer:</span> Vivek Dalvi</div>
+          <div><span class="text-brand-400 font-bold">Official Website:</span> <a href="https://devcart-technologies.in/" target="_blank" class="hover:underline text-white">https://devcart-technologies.in/</a></div>
+          <div><span class="text-brand-400 font-bold">Contact Email:</span> <a href="mailto:info@devcart-technologies.in" class="hover:underline text-white">info@devcart-technologies.in</a></div>
+          <div><span class="text-brand-400 font-bold">GitHub Repository:</span> <a href="https://github.com/vivek-dalvi/gemini-watermark-tool" target="_blank" class="hover:underline text-white">vivek-dalvi/gemini-watermark-tool</a></div>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-gray-800 bg-darkbg py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <img src="devcart-technologies-logo.jpg" alt="DevCart Technologies Logo" class="h-8 w-8 rounded-lg object-cover">
+        <span class="text-sm font-bold text-white">DevCart Technologies</span>
+      </div>
+
+      <!-- Footer Quick Links -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-400">
+        <button id="footerPrivacyBtn" type="button" class="hover:text-brand-400 transition-colors">Privacy Policy</button>
+        <button id="footerAboutBtn" type="button" class="hover:text-brand-400 transition-colors">About DevCart</button>
+        <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" class="hover:text-brand-400 transition-colors flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a href="video-preview.html" class="hover:text-brand-400 transition-colors">Video Tool</a>
+      </div>
+
+      <div class="text-xs text-gray-500 text-center md:text-right">
+        <div>© 2026 DevCart Technologies. All rights reserved. Developed & Maintained by <span class="text-gray-300 font-semibold">Vivek Dalvi</span>.</div>
+        <div class="mt-1">Released under the MIT License • Built for Privacy & Precision</div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- PRIVACY POLICY MODAL -->
+  <div id="privacyModal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-darkbg/80 backdrop-blur-md">
+    <div class="glass-panel rounded-3xl max-w-2xl w-full border border-gray-800 p-6 sm:p-8 max-h-[85vh] overflow-y-auto shadow-2xl relative fade-in-scale">
+      <button id="closePrivacyModalBtn" type="button" class="absolute top-5 right-5 p-2 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">100% Client-Side Privacy Policy</h3>
+          <p class="text-xs text-brand-400 font-mono">DevCart Technologies Privacy Commitment</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-sm text-gray-300 leading-relaxed">
+        <div class="p-4 rounded-2xl bg-darkpanel/80 border border-brand-500/30">
+          <h4 class="font-bold text-white text-sm mb-1 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+            Zero Server Uploads Guarantee
+          </h4>
+          <p class="text-xs text-gray-300">
+            All watermark detection and removal calculations execute strictly inside your local browser memory using HTML5 Canvas, WebAssembly, and local Web Workers. Your images, prompts, and videos never leave your local device and are never uploaded to any remote server.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white text-sm mb-1">1. No Media Storage or Retention</h4>
+          <p class="text-xs text-gray-400">
+            DevCart Technologies does not retain, store, host, or log any images, videos, filenames, or generated pixels. Once you close your browser tab or click "Select Another File", all temporary memory blobs are immediately revoked.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white text-sm mb-1">2. Zero Telemetry & No Tracking</h4>
+          <p class="text-xs text-gray-400">
+            We do not use tracking pixels, Google Analytics, telemetry beacons, or third-party cookies. The application only uses local browser storage (<code class="text-brand-300 font-mono">localStorage</code>) to remember your preferred UI theme and settings.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white text-sm mb-1">3. Content Ownership & Copyright</h4>
+          <p class="text-xs text-gray-400">
+            You retain 100% of the ownership, copyright, and intellectual property rights to all media processed through this tool. DevCart Technologies claims no rights, licenses, or royalties over your media.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white text-sm mb-1">4. Open Source Auditing</h4>
+          <p class="text-xs text-gray-400">
+            Our codebase is completely open source under the MIT License. Anyone can audit the network tab or inspect the source code on GitHub at <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" class="text-brand-400 underline font-mono">github.com/vivek-dalvi/gemini-watermark-tool</a> to verify our zero-network guarantees.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-gray-800 flex justify-end">
+        <button id="dismissPrivacyModalBtn" type="button" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition-all">
+          I Understand & Agree
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT US MODAL -->
+  <div id="aboutModal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-darkbg/80 backdrop-blur-md">
+    <div class="glass-panel rounded-3xl max-w-xl w-full border border-gray-800 p-6 sm:p-8 max-h-[85vh] overflow-y-auto shadow-2xl relative fade-in-scale">
+      <button id="closeAboutModalBtn" type="button" class="absolute top-5 right-5 p-2 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="text-center mb-6">
+        <img src="devcart-technologies-logo.jpg" alt="DevCart Technologies Logo" class="w-16 h-16 rounded-2xl mx-auto mb-3 object-cover ring-4 ring-brand-500/30">
+        <h3 class="text-xl font-bold text-white">DevCart Technologies</h3>
+        <p class="text-xs text-brand-400 font-mono mt-0.5">Gemini Watermark Tool • Open Source</p>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
+        <p>
+          <strong>DevCart Technologies</strong> specializes in engineering privacy-first developer tools, high-performance multimedia utilities, and browser extensions that prioritize mathematical precision over destructive approximations.
+        </p>
+
+        <div class="p-4 rounded-2xl bg-darkpanel/80 border border-gray-800 space-y-2 font-mono text-xs">
+          <div><span class="text-brand-400 font-bold">Developer & Maintainer:</span> Vivek Dalvi</div>
+          <div><span class="text-brand-400 font-bold">Contact Email:</span> <a href="mailto:info@devcart-technologies.in" class="hover:underline text-white">info@devcart-technologies.in</a></div>
+          <div><span class="text-brand-400 font-bold">Official Site:</span> <a href="https://devcart-technologies.in/" target="_blank" class="hover:underline text-white">https://devcart-technologies.in/</a></div>
+          <div><span class="text-brand-400 font-bold">GitHub:</span> <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" class="hover:underline text-white">vivek-dalvi/gemini-watermark-tool</a></div>
+          <div><span class="text-brand-400 font-bold">License:</span> MIT (100% Free & Open Source)</div>
+        </div>
+
+        <p class="text-gray-400 text-xs">
+          Unlike ordinary watermark removers that smudge or hallucinate pixels, our engine mathematically inverts Google Gemini's exact alpha compositing equations, perfectly recovering original pixel values with zero quality loss.
+        </p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+        <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-brand-400 hover:underline flex items-center gap-1.5">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>Star on GitHub</span>
+        </a>
+        <button id="dismissAboutModalBtn" type="button" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-xs font-bold transition-all">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotice" class="toast-notice">
+    <span id="toastIcon" class="text-base">✅</span>
+    <span id="toastMsg">Clean image copied to clipboard!</span>
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loadingOverlay" class="fixed inset-0 bg-darkbg/90 backdrop-blur-md z-[60] hidden flex items-center justify-center">
+    <div class="flex flex-col items-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-400 mb-4"></div>
+      <p class="text-gray-200 font-bold text-sm">Processing Media Local Engine...</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>

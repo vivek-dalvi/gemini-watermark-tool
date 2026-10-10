@@ -53,7 +53,7 @@ test('getRelocatedReviewPresetConfig should keep relocated anchors on the footpr
         videoBitrateMbps: getRelocatedReviewPresetConfig().videoBitrateMbps,
         allowLowConfidence: getRelocatedReviewPresetConfig().allowLowConfidence
     }, {
-        label: 'AI 自动处理',
+        label: 'AI Auto Processing',
         denoiseBackend: VIDEO_DENOISE_BACKENDS.CANVAS_FOOTPRINT_POLISH,
         edgeDenoiseStrength: 1,
         residualCleanupStrength: 1.2,

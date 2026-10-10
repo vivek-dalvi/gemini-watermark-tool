@@ -13,12 +13,12 @@ async function exists(filePath) {
 }
 
 test('package should expose sdk and runtime public subpaths', async () => {
-    const browserSdk = await import('@pilio/gemini-watermark-remover/browser');
-    const imageDataSdk = await import('@pilio/gemini-watermark-remover/image-data');
-    const nodeSdk = await import('@pilio/gemini-watermark-remover/node');
-    const videoSdk = await import('@pilio/gemini-watermark-remover/video');
-    const runtimeBrowserSdk = await import('@pilio/gemini-watermark-remover/runtime-browser');
-    const runtimeUserscriptSdk = await import('@pilio/gemini-watermark-remover/runtime-userscript');
+    const browserSdk = await import('@devcart/gemini-watermark-tool/browser');
+    const imageDataSdk = await import('@devcart/gemini-watermark-tool/image-data');
+    const nodeSdk = await import('@devcart/gemini-watermark-tool/node');
+    const videoSdk = await import('@devcart/gemini-watermark-tool/video');
+    const runtimeBrowserSdk = await import('@devcart/gemini-watermark-tool/runtime-browser');
+    const runtimeUserscriptSdk = await import('@devcart/gemini-watermark-tool/runtime-userscript');
 
     assert.equal(typeof browserSdk.removeWatermarkFromImage, 'function');
     assert.equal(typeof browserSdk.createWatermarkEngine, 'function');

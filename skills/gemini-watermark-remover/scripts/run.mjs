@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const localBinPath = fileURLToPath(new URL('../../../bin/gwr.mjs', import.meta.url));
 const WINDOWS_SHELL = process.env.ComSpec || 'cmd.exe';
-const DEFAULT_CLI_PACKAGE_SPEC = process.env.GWR_SKILL_CLI_SPEC || '@pilio/gemini-watermark-remover';
+const DEFAULT_CLI_PACKAGE_SPEC = process.env.GWR_SKILL_CLI_SPEC || '@devcart/gemini-watermark-remover';
 
 function quoteWindowsCommandArg(value) {
   const stringValue = String(value);

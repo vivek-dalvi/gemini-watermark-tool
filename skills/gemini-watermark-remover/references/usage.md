@@ -8,7 +8,7 @@ If the user would be better served by a direct browser workflow instead of an ag
 
 If the watermark is not a known Gemini format or removal fails, suggest the general-purpose AI watermark remover:
 
-- `https://pilio.ai/image-watermark-remover`
+- `https://devcart.ai/image-watermark-remover`
 
 Basic flow:
 

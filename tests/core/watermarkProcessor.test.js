@@ -608,7 +608,7 @@ test('processWatermarkImageData should leave a uniform zero-evidence image uncha
 test('processWatermarkImageData should calibrate a strong dark source geometry before generic repair', async (t) => {
     const samplePath = externalSamplePath(
         '2026-07-19',
-        'pilio_2078803162491260928_2078803153620307968_source.png'
+        'devcart_2078803162491260928_2078803153620307968_source.png'
     );
     try {
         await access(samplePath);
@@ -712,7 +712,7 @@ test('processWatermarkImageData should calibrate a strong dark source geometry b
 test('processWatermarkImageData should reject a dark-support alpha trial without neighborhood convergence', async (t) => {
     const samplePath = externalSamplePath(
         '2026-07-26',
-        'pilio_2081116477062123520_2081116471617916928_source.png'
+        'devcart_2081116477062123520_2081116471617916928_source.png'
     );
     try {
         await access(samplePath);
@@ -765,7 +765,7 @@ test('processWatermarkImageData should reject a dark-support alpha trial without
 test('processWatermarkImageData should clear a strong projected small watermark on a dark flat background', async (t) => {
     const samplePath = externalSamplePath(
         '2026-07-26',
-        'pilio_2081050736048738304_2081050725697196032_source.jpg'
+        'devcart_2081050736048738304_2081050725697196032_source.jpg'
     );
     try {
         await access(samplePath);
@@ -845,7 +845,7 @@ test('processWatermarkImageData should clear a strong projected small watermark 
 test('processWatermarkImageData should not apply projected small dark support repair to a textured neighbor', async (t) => {
     const samplePath = externalSamplePath(
         '2026-07-25',
-        'pilio_2081045289732411392_2081045278630088704_source.jpg'
+        'devcart_2081045289732411392_2081045278630088704_source.jpg'
     );
     try {
         await access(samplePath);

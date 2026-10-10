@@ -13,7 +13,7 @@ const DEFAULT_MARKDOWN_PATH = path.resolve('.artifacts/release-distribution/late
 const DEFAULTS = Object.freeze({
   packageJson: 'package.json',
   repo: 'GargantuaX/gemini-watermark-remover',
-  npmPackage: '@pilio/gemini-watermark-remover',
+  npmPackage: '@devcart/gemini-watermark-tool',
   siteBaseUrl: 'https://geminiwatermarkremover.io',
   chromeExtensionId: 'cjlmnfcfnofnglkphbcdclbpimdjkmdf'
 });
@@ -219,7 +219,7 @@ function expectedAssetNames(version) {
     `gemini-watermark-remover-extension-v${version}.zip.sha256.txt`,
     'gemini-watermark-remover.user.js',
     'latest-extension.json',
-    `pilio-gemini-watermark-remover-${version}.tgz`
+    `devcart-gemini-watermark-remover-${version}.tgz`
   ].sort();
 }
 

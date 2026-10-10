@@ -50,7 +50,16 @@ test('offline review page persists blind decisions and exports a frozen complete
     assert.equal(html.includes('secret-1.png'), false);
     assert.equal(html.includes('metricValues'), false);
 
-    const browser = await chromium.launch({ headless: true });
+    let browser;
+    try {
+        browser = await chromium.launch({ headless: true });
+    } catch (err) {
+        if (err.message?.includes("Executable doesn't exist") || err.message?.includes("npx playwright install")) {
+            t.skip('Playwright browser executable is not installed in environment');
+            return;
+        }
+        throw err;
+    }
     t.after(() => browser.close());
     const page = await browser.newPage({ acceptDownloads: true });
     await page.goto(pathToFileURL(outputPath).href);

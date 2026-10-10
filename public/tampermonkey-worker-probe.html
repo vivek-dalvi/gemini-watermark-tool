@@ -109,29 +109,29 @@
   <main>
     <h1>Tampermonkey DOM Sandbox Worker Probe</h1>
     <p>
-      这个页面模拟 Gemini 类约束中的 <code>worker-src 'self'</code>，因此页面自身的 Blob Worker 应该失败。
-      如果 Tampermonkey 能以 DOM sandbox 运行，就应该还能在隔离上下文里拉起 Worker，并通过桥接把结果回发给页面。
+      This page simulates Gemini's <code>worker-src 'self'</code> constraint, where the page's own Blob Worker is expected to fail.
+      If Tampermonkey operates correctly in a DOM sandbox, it should be able to spawn a Worker in its isolated context and bridge the results back to the page.
     </p>
     <div class="actions">
-      <a class="button" href="/tampermonkey-worker-probe.user.js">安装 / 更新 Probe Userscript</a>
-      <a class="button" href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" rel="noreferrer">打开 Tampermonkey 商店页</a>
+      <a class="button" href="/tampermonkey-worker-probe.user.js">Install / Update Probe Userscript</a>
+      <a class="button" href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" rel="noreferrer">Open Tampermonkey Store Page</a>
     </div>
     <div class="panel-grid">
       <section class="panel">
         <span class="label">Page Blob Worker</span>
-        <div class="value" id="page-worker-status">等待中</div>
+        <div class="value" id="page-worker-status">Waiting</div>
       </section>
       <section class="panel">
         <span class="label">Userscript Sandbox Worker</span>
-        <div class="value" id="sandbox-worker-status">等待中</div>
+        <div class="value" id="sandbox-worker-status">Waiting</div>
       </section>
       <section class="panel">
         <span class="label">Bridge Roundtrip</span>
-        <div class="value" id="bridge-status">等待中</div>
+        <div class="value" id="bridge-status">Waiting</div>
       </section>
       <section class="panel">
         <span class="label">Overall</span>
-        <div class="value" id="overall-status">启动中</div>
+        <div class="value" id="overall-status">Initializing</div>
       </section>
     </div>
     <pre id="report">waiting...</pre>
@@ -166,14 +166,14 @@
         sandboxWorkerNode.textContent = formatStatus(state.userscriptSandboxWorker);
         bridgeNode.textContent = formatStatus(state.bridgeRoundtrip);
         overallNode.textContent = state.completed
-          ? (state.bridgeRoundtrip?.ok ? '完成' : '失败')
-          : (state.userscriptDetected ? '桥接测试中' : '等待 Userscript');
+          ? (state.bridgeRoundtrip?.ok ? 'Success' : 'Failed')
+          : (state.userscriptDetected ? 'Testing Bridge' : 'Waiting for Userscript');
         reportNode.textContent = JSON.stringify(state, null, 2);
         document.documentElement.dataset.gwrTmProbeStatus = state.completed ? 'complete' : 'running';
       };
 
       const formatStatus = (value) => {
-        if (!value) return '等待中';
+        if (!value) return 'Waiting';
         if (value.ok === true) return value.summary || 'OK';
         if (value.ok === false) return value.summary || value.message || 'FAILED';
         return JSON.stringify(value);

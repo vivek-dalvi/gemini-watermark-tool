@@ -3,15 +3,15 @@ import {
     removeWatermarkFromImageDataSync,
     type ImageDataLike,
     type WatermarkMeta
-} from '@pilio/gemini-watermark-remover';
+} from '@devcart/gemini-watermark-remover';
 import {
     inferMimeTypeFromPath,
     type NodeBufferRemovalOptions,
     type VideoFileRemovalOptions,
     type VideoProcessingProgress
-} from '@pilio/gemini-watermark-remover/node';
-import { createBrowserRuntimeProcessor } from '@pilio/gemini-watermark-remover/runtime-browser';
-import { createUserscriptRuntimeProcessor } from '@pilio/gemini-watermark-remover/runtime-userscript';
+} from '@devcart/gemini-watermark-remover/node';
+import { createBrowserRuntimeProcessor } from '@devcart/gemini-watermark-remover/runtime-browser';
+import { createUserscriptRuntimeProcessor } from '@devcart/gemini-watermark-remover/runtime-userscript';
 
 const imageData: ImageDataLike = {
     width: 64,

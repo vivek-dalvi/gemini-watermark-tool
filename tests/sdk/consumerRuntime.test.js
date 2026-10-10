@@ -9,7 +9,7 @@ import { packProjectTarball, runCommand } from './testUtils.js';
 test('packed sdk should be runnable from an isolated consumer project', async () => {
     const tempDir = await mkdtemp(path.join(os.tmpdir(), 'wm-consumer-'));
     const nodeModulesDir = path.join(tempDir, 'node_modules');
-    const packageRoot = path.join(nodeModulesDir, '@pilio', 'gemini-watermark-remover');
+    const packageRoot = path.join(nodeModulesDir, '@devcart', 'gemini-watermark-remover');
     const tarballDir = path.join(tempDir, 'packed');
     const consumerEntry = path.join(tempDir, 'consumer.mjs');
 
@@ -24,11 +24,11 @@ import assert from 'node:assert/strict';
 import {
     createWatermarkEngine,
     removeWatermarkFromImageDataSync
-} from '@pilio/gemini-watermark-remover';
-import { removeWatermarkFromBuffer, inferMimeTypeFromPath } from '@pilio/gemini-watermark-remover/node';
-import { removeVideoWatermarkFromBuffer, inferVideoMimeTypeFromPath } from '@pilio/gemini-watermark-remover/video';
-import { createBrowserRuntimeProcessor } from '@pilio/gemini-watermark-remover/runtime-browser';
-import { createUserscriptRuntimeProcessor } from '@pilio/gemini-watermark-remover/runtime-userscript';
+} from '@devcart/gemini-watermark-tool';
+import { removeWatermarkFromBuffer, inferMimeTypeFromPath } from '@devcart/gemini-watermark-tool/node';
+import { removeVideoWatermarkFromBuffer, inferVideoMimeTypeFromPath } from '@devcart/gemini-watermark-tool/video';
+import { createBrowserRuntimeProcessor } from '@devcart/gemini-watermark-tool/runtime-browser';
+import { createUserscriptRuntimeProcessor } from '@devcart/gemini-watermark-tool/runtime-userscript';
 
 const engine = await createWatermarkEngine();
 const browserRuntime = createBrowserRuntimeProcessor({
@@ -98,7 +98,7 @@ assert.equal(typeof bufferResult.meta.applied, 'boolean');
 
 let privateImportCode = 'no-error';
 try {
-    await import('@pilio/gemini-watermark-remover/src/core/watermarkProcessor.js');
+    await import('@devcart/gemini-watermark-tool/src/core/watermarkProcessor.js');
 } catch (error) {
     privateImportCode = error && typeof error === 'object' ? error.code || error.name || 'unknown-error' : 'unknown-error';
 }

@@ -31,8 +31,8 @@ function encodeSyntheticImageData(imageData) {
 }
 
 test('removeWatermarkFromBuffer should support pluggable Node decode and encode hooks', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover/node');
-    const imageDataSdk = await import('@pilio/gemini-watermark-remover/image-data');
+    const mod = await import('@devcart/gemini-watermark-tool/node');
+    const imageDataSdk = await import('@devcart/gemini-watermark-tool/image-data');
     const alpha48 = await imageDataSdk.createWatermarkEngine().then((engine) => engine.getAlphaMap(48));
     const imageData = createPatternImageData(320, 320);
     const position = { x: 320 - 32 - 48, y: 320 - 32 - 48, width: 48, height: 48 };
@@ -52,8 +52,8 @@ test('removeWatermarkFromBuffer should support pluggable Node decode and encode 
 });
 
 test('removeWatermarkFromFile should read input and optionally write output', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover/node');
-    const imageDataSdk = await import('@pilio/gemini-watermark-remover/image-data');
+    const mod = await import('@devcart/gemini-watermark-tool/node');
+    const imageDataSdk = await import('@devcart/gemini-watermark-tool/image-data');
     const alpha48 = await imageDataSdk.createWatermarkEngine().then((engine) => engine.getAlphaMap(48));
     const imageData = createPatternImageData(320, 320);
     const position = { x: 320 - 32 - 48, y: 320 - 32 - 48, width: 48, height: 48 };
@@ -79,7 +79,7 @@ test('removeWatermarkFromFile should read input and optionally write output', as
 });
 
 test('removeVideoWatermarkFromFile should support an injected video processor', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover/node');
+    const mod = await import('@devcart/gemini-watermark-tool/node');
     const tempDir = await mkdtemp(path.join(os.tmpdir(), 'wm-node-video-sdk-'));
     const inputPath = path.join(tempDir, 'input.mp4');
     const outputPath = path.join(tempDir, 'output.mp4');
@@ -114,7 +114,7 @@ test('removeVideoWatermarkFromFile should support an injected video processor', 
 });
 
 test('removeVideoWatermarkFromBuffer should support an injected video buffer processor', async () => {
-    const mod = await import('@pilio/gemini-watermark-remover/video');
+    const mod = await import('@devcart/gemini-watermark-tool/video');
     const result = await mod.removeVideoWatermarkFromBuffer(Buffer.from('source-video'), {
         mimeType: 'video/mp4',
         processVideoBuffer(inputBuffer, context) {

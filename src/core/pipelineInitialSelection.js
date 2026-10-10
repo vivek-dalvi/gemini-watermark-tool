@@ -1172,10 +1172,10 @@ export function collectInitialWatermarkCandidates(input = {}) {
                     input.originalImageData
                 )
             ));
-    const bestEffortFallback = !presenceConfirmed && Boolean(
+    const bestEffortFallback = (!presenceConfirmed && Boolean(
         sourceWitnessRescueTrial ||
         bestEffortSelections.length > 0
-    );
+    )) || input.forceBestEffort === true;
     if (!presenceConfirmed && !bestEffortFallback) {
         return {
             hypotheses: [],

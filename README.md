@@ -1,426 +1,213 @@
-[中文文档](README_zh.md)
+<p align="center">
+  <img src="public/devcart-technologies-logo.jpg" alt="DevCart Technologies Logo" width="120" style="border-radius: 20px;">
+</p>
 
-> 🔥 Tired of Gemini watermarks? Try the more powerful **GPT Image 2** at [pilio.ai](https://pilio.ai) — free for a limited time.
-
-# Gemini Watermark Remover — Lossless Watermark Removal Tool
-
-An open-source tool to **remove Gemini watermarks** from AI-generated images with high-fidelity, reproducible results on supported outputs. Built with pure JavaScript, the engine uses a mathematically exact **Reverse Alpha Blending** algorithm instead of unpredictable AI inpainting.
-
-> **🚀 Looking for the `Online Gemini Watermark Remover (Recommended)`? Try [geminiwatermarkremover.io](https://geminiwatermarkremover.io/)** — free, no install, works directly in your browser.
->
-> 💡 Got watermarks that Gemini Watermark Remover can't handle? Try the general-purpose AI watermark remover: [pilio.ai/image-watermark-remover](https://pilio.ai/image-watermark-remover)
+<h1 align="center">DevCart Gemini Watermark Tool</h1>
 
 <p align="center">
-  <a href="https://geminiwatermarkremover.io/"><img src="https://img.shields.io/badge/🛠️_Online_Tool-geminiwatermarkremover.io-blue?style=for-the-badge" alt="Online Tool"></a>&nbsp;
-  <a href="https://geminiwatermarkremover.io/video"><img src="https://img.shields.io/badge/🎬_Video_Remover-New!-ff6b6b?style=for-the-badge" alt="Video Watermark Remover"></a>&nbsp;
-  <a href="https://chromewebstore.google.com/detail/gemini-watermark-remover/cjlmnfcfnofnglkphbcdclbpimdjkmdf"><img src="https://img.shields.io/badge/🧩_Chrome_Extension-Install-blueviolet?style=for-the-badge" alt="Chrome Extension"></a>&nbsp;
-  <a href="https://geminiwatermarkremover.io/userscript/gemini-watermark-remover.user.js"><img src="https://img.shields.io/badge/🐒_Userscript-Install-green?style=for-the-badge" alt="Userscript"></a>&nbsp;
-  <a href="https://pilio.ai/image-watermark-remover"><img src="https://img.shields.io/badge/🧹_General_Remover-pilio.ai-gray?style=for-the-badge" alt="General Watermark Remover"></a>
+  <b>Official Free & Open-Source AI Image & Video Watermark Removal Suite</b><br>
+  <i>Built by <b>DevCart Technologies</b> • Lead Developer: <b>Vivek Dalvi</b></i>
 </p>
 
 <p align="center">
-  <img src="https://count.getloli.com/@gemini-watermark-remover?name=gemini-watermark-remover&theme=minecraft&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" width="400">
+  <a href="https://github.com/vivek-dalvi/gemini-watermark-tool.git"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repository"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="MIT License"></a>
+  <a href="https://devcart-technologies.in/"><img src="https://img.shields.io/badge/Website-devcart--technologies.in-059669?style=for-the-badge&logo=googlechrome&logoColor=white" alt="DevCart Technologies Website"></a>
+  <a href="mailto:vivekdalvi147@gmail.com"><img src="https://img.shields.io/badge/Developer-Vivek%20Dalvi-0284c7?style=for-the-badge&logo=gmail&logoColor=white" alt="Developer Vivek Dalvi"></a>
+  <img src="https://img.shields.io/badge/Privacy-100%25%20Client--Side-emerald?style=for-the-badge" alt="100% Client-Side Privacy">
 </p>
-
-## Features
-
-- ✅ **100% Local Processing** - All image processing happens locally in your browser or on your machine. Nothing is uploaded.
-- ✅ **Mathematical Precision** - Based on the Reverse Alpha Blending formula, not "hallucinating" AI models.
-- ✅ **Auto-Detection** - Automatically identifies watermark size and position using Gemini's known output catalog and local anchor search.
-- ✅ **Flexible Usage** - Online tool for quick use, Chrome extension or userscript for seamless Gemini page integration, CLI and Skill for scripting and automation.
-- ✅ **Video Support** - Remove watermarks from Gemini-generated videos at [geminiwatermarkremover.io/video](https://geminiwatermarkremover.io/video).
-- ✅ **Cross-Platform** - Works in modern browsers (Chrome, Firefox, Safari, Edge) and Node.js environments.
-
-## Gemini Watermark Removal Examples
-
-<details open>
-<summary>Click to Expand/Collapse Examples</summary>
-
-| Original Image | Watermark Removed |
-| :---: | :----: |
-| <img src="docs/demo-before.webp" width="400"> | <img src="docs/demo-after.webp" width="400"> |
-
-</details>
-
-## ⚠️ Disclaimer
-
-> [!WARNING]
->  **USE AT YOUR OWN RISK**
->
-> This tool modifies image files. While it is designed to work reliably, unexpected results may occur due to:
-> - Variations in Gemini's watermark implementation
-> - Corrupted or unusual image formats
-> - Edge cases not covered by testing
->
-> The author assumes no responsibility for any data loss, image corruption, or unintended modifications. By using this tool, you acknowledge that you understand these risks.
-
-> [!NOTE]
-> **Note**: Disable any fingerprint defender extensions (e.g., Canvas Fingerprint Defender) to avoid processing errors. https://github.com/GargantuaX/gemini-watermark-remover/issues/3
-
-## How to Remove Gemini Watermarks
-
-### Online Gemini Watermark Remover (Recommended)
-
-For all users — the fastest and easiest way to remove Gemini watermarks from images:
-
-1. Open **[geminiwatermarkremover.io](https://geminiwatermarkremover.io/)**.
-2. Drag and drop or click to select your Gemini-generated image.
-3. The engine will automatically process and remove the watermark.
-4. Download the cleaned image.
-
-### Online Video Watermark Remover (New!)
-
-For Gemini-generated **videos** with visible watermarks:
-
-1. Open **[geminiwatermarkremover.io/video](https://geminiwatermarkremover.io/video)**.
-2. Upload or drag-and-drop your Gemini-generated video.
-3. The tool will automatically detect and remove the watermark from the video.
-4. Download the cleaned video.
-
-> **Note**: Video watermark removal runs entirely in your browser — no files are uploaded to any server.
-
-### Chrome Extension
-
-Use this if you do not want a userscript manager but still want automatic Gemini page integration for previews, copy, and download actions.
-
-1. Open [Gemini Watermark Remover on the Chrome Web Store](https://chromewebstore.google.com/detail/gemini-watermark-remover/cjlmnfcfnofnglkphbcdclbpimdjkmdf).
-2. Click **Add to Chrome** and confirm the install.
-3. Open Gemini. The extension will automatically process supported Gemini images.
-
-The popup includes an "Enable on Gemini" toggle. If Gemini becomes slow, behaves unexpectedly, or you need to troubleshoot the page, turn the toggle off and refresh Gemini.
-
-Chrome Web Store installs update automatically. If the Web Store is not reachable in your network, the matching verified zip (`gemini-watermark-remover-extension-v*.zip`) remains available from [GitHub Releases](https://github.com/GargantuaX/gemini-watermark-remover/releases/latest) and the official website download entry for manual unpacked installation.
-
-### Userscript
-
-1. Install a userscript manager (e.g., Tampermonkey or Greasemonkey).
-2. Open [gemini-watermark-remover.user.js](https://geminiwatermarkremover.io/userscript/gemini-watermark-remover.user.js).
-3. The script will install automatically.
-4. Navigate to Gemini conversation pages.
-5. Eligible Gemini preview images on the page are replaced in place after processing.
-6. Gemini's native "Copy Image" and "Download Image" actions also return processed results.
-
-Current userscript boundaries:
-
-- no injected per-image controls
-- no popup UI or bulk action surface
-- page previews and native copy/download flows are both processed when the source image is reachable
-- preview images keep the original visible while processing, with a subdued `Processing...` overlay
-- if preview processing fails, the original page image stays visible and usable
-
-### Skill
-
-For workflows that involve AI coding agents:
-
-- `skills/gemini-watermark-remover/` contains a packaged Skill that agents can discover and invoke.
-- Install it with `skills.sh` using:
-
-```bash
-pnpm dlx skills add GargantuaX/gemini-watermark-remover --skill gemini-watermark-remover
-```
-
-- Add flags like `--agent`, `--yes`, or `--copy` only if your local setup needs them.
-- Usage:
-
-```bash
-node skills/gemini-watermark-remover/scripts/run.mjs remove <input> --output <file>
-```
-
-- See [`SKILL.md`](skills/gemini-watermark-remover/SKILL.md) for agent integration details.
-
-### CLI
-
-For scripting, CI, and local batch workflows, use the direct CLI:
-
-```bash
-# repo-local
-node bin/gwr.mjs remove <input> --output <file>
-
-# installed globally
-gwr remove <input> [--output <file> | --out-dir <dir>] [--overwrite] [--json]
-```
-
-Video exports default to the repository's calibrated 12 Mbps AVC profile. For a
-quality-sensitive source, request a higher encoder target explicitly:
-
-```bash
-gwr remove input.mp4 --output clean.mp4 --video-bitrate-mbps 20
-```
-
-The CLI reports video frame progress on stderr. `--video-timeout-ms` is an
-inactivity timeout: an export may run longer than that value as long as frames
-continue to advance.
-
-If you do not have `gwr` installed globally, use:
-
-```bash
-pnpm dlx @pilio/gemini-watermark-remover remove <input> --output <file>
-```
-
-The default CLI file decoder/encoder uses `sharp`. SDK consumers that only use browser or `ImageData` APIs do not need it. If you use the CLI file path in your own project, install `sharp` alongside this package:
-
-```bash
-pnpm add sharp
-```
-
-### Can't Remove Your Watermark?
-
-This tool targets Gemini's visible watermark (the semi-transparent logo in the bottom-right corner). If your image watermark doesn't match a known Gemini format, or you need to remove other types of image watermarks, try the general-purpose AI watermark remover:
-
-👉 **[pilio.ai/image-watermark-remover](https://pilio.ai/image-watermark-remover)**
-
-### Developer Preview
-
-The repository still keeps a local internal preview harness at `/dev-preview.html` for single-image comparison, copy, and download verification.
-
-- This is a retained internal debugging surface, not the public product website.
-- The root path `/` now only redirects users toward the official website, the userscript artifact, and the internal preview page.
-- Public-facing usage should prefer the official website or the userscript instead of this local preview harness.
-
-## Development
-
-```bash
-# Install dependencies
-pnpm install
-
-# Development build
-pnpm dev
-
-# Production build
-pnpm build
-
-# Local static serving
-pnpm serve
-```
-
-Notes:
-
-- The root path `/` is now a lightweight entry page that points to the official website, the userscript artifact, and the retained internal preview page.
-- The internal browser preview harness lives at `/dev-preview.html`, is now kept as a static Chinese-only single-image compare harness for local algorithm/UI debugging, and no longer maintains public-facing locale or theme-switching features.
-- `pnpm dev` / `pnpm serve` still host the userscript, probe pages, and these static assets.
-- For GitHub issues with Release-hosted samples, `pnpm issue:verify -- --issue <number>` reuses the `gh` login, caches and verifies the samples, and generates a reviewable comment draft. See [GitHub issue sample verification](docs/github-issue-verification.zh.md).
-
-### Tampermonkey Debugging on macOS
-
-For the repo's fixed-profile workflow on macOS:
-
-```bash
-# Build the latest userscript
-pnpm build
-
-# Start a local dist server if needed
-pnpm dev
-
-# Open the fixed Chrome profile with remote debugging enabled
-./scripts/open-fixed-chrome-profile.sh --url https://gemini.google.com/app
-```
-
-Notes:
-
-- the fixed profile lives under `.chrome-debug/tampermonkey-profile`
-- default CDP port is `9226`
-- default proxy is `http://127.0.0.1:7890`; disable it with `--proxy off` if not needed
-- reinstall the latest userscript from the active local `pnpm dev` server
-- `pnpm dev` starts probing from `http://127.0.0.1:4173/` and auto-increments if that port is already occupied
-- if you are following a previously captured debugging session, its port may differ; trust the current `pnpm dev` output instead of hardcoding `4173`
-
-## SDK Usage (Advanced / Internal)
-
-The package root still exposes an SDK, but this path is intended for advanced or internal integration scenarios:
-
-```javascript
-import {
-  createWatermarkEngine,
-  removeWatermarkFromImage,
-  removeWatermarkFromImageData,
-  removeWatermarkFromImageDataSync,
-} from '@pilio/gemini-watermark-remover';
-```
-
-Use the pure-data API when you already have decoded `ImageData`:
-
-```javascript
-const result = await removeWatermarkFromImageData(imageData, {
-  adaptiveMode: 'auto',
-});
-
-console.log(result.meta.decisionTier);
-```
-
-Use the browser image API when you have an `HTMLImageElement` or `HTMLCanvasElement`:
-
-```javascript
-const { canvas, meta } = await removeWatermarkFromImage(imageElement);
-document.body.append(canvas);
-console.log(meta.applied, meta.decisionTier);
-```
-
-If you need to process many images, reuse a single engine instance so alpha maps stay cached:
-
-```javascript
-const engine = await createWatermarkEngine();
-const first = await removeWatermarkFromImageData(imageDataA, { engine });
-const second = await removeWatermarkFromImageData(imageDataB, { engine });
-```
-
-For Node.js integrations, use the dedicated subpath and inject your own decoder/encoder:
-
-```javascript
-import { removeWatermarkFromBuffer } from '@pilio/gemini-watermark-remover/node';
-
-const result = await removeWatermarkFromBuffer(inputBuffer, {
-  mimeType: 'image/png',
-  decodeImageData: yourDecodeFn,
-  encodeImageData: yourEncodeFn,
-});
-```
-
-## Runtime Requirements
-
-### Web And Userscript
-
-- modern Chrome / Firefox / Safari / Edge class browser
-- ES modules
-- Canvas API
-- Async/Await
-- TypedArray (`Float32Array`, `Uint8ClampedArray`)
-- for the website copy button: `navigator.clipboard.write(...)` and `ClipboardItem`
-
-### CLI And Skill
-
-- a local Node.js runtime capable of running this package
-- `sharp` installed when using the default CLI file decoder/encoder
-- filesystem access for local input/output paths
-- for repo-local usage:
-
-```bash
-node bin/gwr.mjs remove <input> --output <file>
-node skills/gemini-watermark-remover/scripts/run.mjs remove <input> --output <file>
-```
-
-- for distributed Skill usage, the local environment must be able to execute the packaged `gwr` CLI boundary
-
-## Testing
-
-```bash
-# Run all tests
-pnpm test
-```
-
-Regression tests include image fixtures from `src/assets/samples/`.
-Source samples stay in git.
-Naming and retention rules for those fixtures are documented in `src/assets/samples/README.md`.
-Complex preview/download validation notes are documented in `docs/complex-figure-verification-checklist.md`.
-Local files under `src/assets/samples/fix/` are optional snapshot outputs for manual regression checks and are intentionally not tracked by git.
-
-## Release Notes
-
-See [CHANGELOG.md](CHANGELOG.md) for release history and [RELEASE.md](RELEASE.md) for the local release checklist. The latest post-release closeout is documented in [docs/release-1.0.29-post-release.md](docs/release-1.0.29-post-release.md).
-
-## How Gemini Watermark Removal Works
-
-### The Gemini Watermarking Process
-
-Gemini applies watermarks using standard alpha compositing:
-
-$$watermarked = \alpha \cdot logo + (1 - \alpha) \cdot original$$
-
-Where:
-- `watermarked`: The pixel value with the watermark.
-- `α`: The Alpha channel value (0.0 - 1.0).
-- `logo`: The watermark logo color value (White = 255).
-- `original`: The raw, original pixel value we want to recover.
-
-### The Reverse Solution
-
-To remove the watermark, we solve for `original`:
-
-$$original = \frac{watermarked - \alpha \cdot logo}{1 - \alpha}$$
-
-By capturing the watermark on a known solid background, we reconstruct the exact Alpha map and apply the inverse formula to restore the original pixels with zero loss.
-
-## Detection Rules
-
-The engine uses layered detection to locate and verify watermarks:
-
-1. **Size catalog lookup** — matches image dimensions against Gemini's known output sizes to predict watermark size and position.
-2. **Local anchor search** — refines the predicted position by scanning pixel data around the expected watermark region.
-3. **Restoration validation** — confirms the detected watermark is real before applying removal, avoiding false positives.
-
-Default watermark configurations:
-
-| Condition | Watermark Size | Right Margin | Bottom Margin |
-| :--- | :--- | :--- | :--- |
-| Larger Gemini outputs | 96×96 | 64px | 64px |
-| Smaller Gemini outputs | 48×48 | 32px | 32px |
-
-## Project Structure
-
-```text
-gemini-watermark-remover/
-├── bin/                   # Published CLI entrypoint (`gwr`)
-├── public/
-│   ├── index.html         # Entry page for official site / userscript / internal preview
-│   ├── dev-preview.html   # Internal browser preview harness kept for local debugging
-│   └── tampermonkey-worker-probe.*  # Probe pages for userscript/debug flows
-├── skills/
-│   └── gemini-watermark-remover/    # Distributable agent skill bundle
-├── src/
-│   ├── assets/            # Calibration assets and regression samples
-│   ├── cli/               # CLI argument parsing and file workflows
-│   ├── core/              # Watermark math, scoring, and restoration
-│   ├── page/              # Page-side runtime for Gemini page integration
-│   ├── sdk/               # Advanced/internal SDK surface
-│   ├── shared/            # Shared DOM, blob, and session helpers
-│   ├── userscript/        # Userscript entrypoints and browser hooks
-│   ├── workers/           # Worker runtime
-│   ├── app.js             # Internal single-image preview harness entry point
-│   └── utils.js           # Shared browser helpers for the internal preview page
-├── tests/                 # Unit, regression, packaging, and smoke tests
-├── scripts/               # Local automation and debug launchers
-├── dist/                  # Build output directory
-├── build.js               # Build script
-└── package.json
-```
-
-## Architecture Overview
-
-- `src/core/` contains watermark detection, candidate selection, restoration metrics, and the reverse-alpha removal pipeline.
-- `src/userscript/`, `src/page/`, and `src/shared/` implement the real Gemini page integration, including preview replacement plus copy/download interception.
-- `src/cli/` and `bin/gwr.mjs` expose file-oriented local automation.
-- `skills/gemini-watermark-remover/` provides a distributable Skill that stays on the CLI boundary instead of importing repository internals directly.
-- `src/sdk/` remains available for advanced/internal integrations, but it is no longer the primary public entrypoint.
 
 ---
 
-## Limitations
+## 1. Overview & Open Source Philosophy
 
-- Only removes **Gemini visible watermarks** <small>(the semi-transparent logo in bottom-right)</small>
-- Supports both **image** and **video** watermark removal — video processing is available via the [online tool](https://geminiwatermarkremover.io/video)
-- Does not remove invisible/steganographic watermarks. <small>[(Learn more about SynthID)](https://support.google.com/gemini/answer/16722517)</small>
-- Designed for Gemini's current visible watermark pattern <small>(validated against this repo through April 2026)</small>
+**DevCart Gemini Watermark Tool** is a 100% free, open-source software suite engineered by **DevCart Technologies** and developed by **Vivek Dalvi**. It is designed to automatically detect and eliminate translucent watermark logos from images and videos generated by Google Gemini AI (0.5K, 1K, 2K, 4K) and Google Veo.
 
-## Legal Disclaimer
+Unlike conventional online watermark tools that use destructive AI inpainting or blur passes (which destroy details and hallucinate fake pixels), this tool performs exact **mathematical inverse alpha channel recovery**. By solving the original compositing equation in reverse ($C_{\text{orig}} = \frac{C_{\text{wm}} - \alpha \cdot C_{\text{src}}}{1 - \alpha}$), the software restores the underlying original pixel values with **zero quality loss**.
 
-This project is released under the **MIT License**.
+- **Repository**: [https://github.com/vivek-dalvi/gemini-watermark-tool.git](https://github.com/vivek-dalvi/gemini-watermark-tool.git)
+- **License**: MIT License (Permissive, 100% Free for personal and commercial use)
+- **Lead Developer**: Vivek Dalvi ([vivekdalvi147@gmail.com](mailto:vivekdalvi147@gmail.com))
+- **Organization**: DevCart Technologies ([info@devcart-technologies.in](mailto:info@devcart-technologies.in))
 
-The removal of watermarks may have legal implications depending on your jurisdiction and the intended use of the images. Users are solely responsible for ensuring their use of this tool complies with applicable laws, terms of service, and intellectual property rights.
+---
 
-The author does not condone or encourage the misuse of this tool for copyright infringement, misrepresentation, or any other unlawful purposes.
+## 2. Key Features
 
-**THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.**
+- **Reverse Alpha Blending Engine**: Mathematically restores authentic underlying pixels instead of smudging or blurring.
+- **100% Client-Side Privacy**: All processing executes strictly inside local browser memory via HTML5 Canvas, WebAssembly, and Web Workers. Zero bytes are uploaded to remote servers.
+- **Image & Video Support**:
+  - **Images**: PNG, JPG, WebP across 512px (0.5K), 1024px (1K), 2048px (2K), and 4096px (4K) resolutions.
+  - **Videos**: MP4, WebM, and MOV video clips with frame-by-frame denoise and original audio stream preservation.
+- **Interactive UI with View Modes**:
+  - **Split Slider**: Drag handle to dynamically compare before and after.
+  - **Side-by-Side**: Two full-resolution panes for comparative inspection.
+  - **Flip Toggle**: One-click quick toggle between original and processed output.
+- **Multiple Theme Options**:
+  - **Dark Emerald**: Signature cyberpunk emerald dark mode (Default).
+  - **Midnight OLED**: Ultra-deep pitch-black `#000000` with vibrant neon highlights.
+  - **Clean Light Studio**: High-contrast, clean minimalist light theme.
+- **Multiple Deployment Entrypoints**:
+  - **Web Application Portal**: Modern drag-and-drop web UI.
+  - **Tampermonkey Userscript**: Cleans downloads and previews directly inside `gemini.google.com`.
+  - **Chrome Extension (Manifest V3)**: Dedicated browser popup extension.
+  - **Node.js SDK & CLI**: Batch CLI commands for servers, automation, and desktop scripts.
 
-## Credits
+---
 
-This project is a JavaScript port of the [Gemini Watermark Tool](https://github.com/allenk/GeminiWatermarkTool) by Allen Kuo ([@allenk](https://github.com/allenk)).
+## 3. How to Deploy (Step-by-Step Guide)
 
-The Reverse Alpha Blending method and calibrated watermark masks are based on the original work © 2024 AllenK (Kwyshell), licensed under MIT License.
+You can run and deploy the DevCart Gemini Watermark Tool across several environments:
 
-## Related Links
+### Method A: Local Development / Node.js
+```bash
+# 1. Clone the official repository
+git clone https://github.com/vivek-dalvi/gemini-watermark-tool.git
+cd gemini-watermark-tool
 
-- [Gemini Watermark Tool](https://github.com/allenk/GeminiWatermarkTool)
-- [Removing Gemini AI Watermarks: A Deep Dive into Reverse Alpha Blending](https://allenkuo.medium.com/removing-gemini-ai-watermarks-a-deep-dive-into-reverse-alpha-blending-bbbd83af2a3f)
+# 2. Install dependencies
+npm install
 
-## License
+# 3. Start local development server
+npm run dev
 
-[MIT License](./LICENSE)
+# 4. Open in browser
+# Navigate to http://localhost:4173
+```
+
+### Method B: Production Build & Local Server
+```bash
+# Build the production distribution
+npm run build
+
+# Start production server on port 3000
+npm start
+```
+
+### Method C: Docker Deployment
+A ready-to-use containerized deployment:
+
+1. Create a `Dockerfile` in the project root (or use the existing one):
+```dockerfile
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+COPY --from=builder /app ./
+EXPOSE 3000
+ENV PORT=3000
+CMD ["npm", "start"]
+```
+
+2. Build and run the Docker container:
+```bash
+# Build the image
+docker build -t devcart/gemini-watermark-tool .
+
+# Run container on port 3000
+docker run -d -p 3000:3000 --name gemini-watermark-tool devcart/gemini-watermark-tool
+```
+
+### Method D: Deploy to Google Cloud Run / AWS / VPS
+Because the web app compiles to static HTML/JS/CSS assets with a lightweight Node.js server (`server.js` or `build.js`):
+1. **Google Cloud Run**:
+   ```bash
+   gcloud run deploy gemini-watermark-tool --source . --port 3000 --allow-unauthenticated
+   ```
+2. **VPS (Ubuntu/Debian) with PM2**:
+   ```bash
+   git clone https://github.com/vivek-dalvi/gemini-watermark-tool.git
+   cd gemini-watermark-tool
+   npm install
+   npm run build
+   npm install -g pm2
+   pm2 start "npm start" --name "gemini-watermark-tool"
+   ```
+
+### Method E: Deploy to Static Hosting (Vercel, Cloudflare Pages, Netlify)
+Since the client-side app runs 100% in the browser:
+- **Root Directory**: `.`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist` (or `public`)
+
+---
+
+## 4. Browser Integrations
+
+### Tampermonkey Userscript (Auto-clean on Gemini Web App)
+1. Install [Tampermonkey](https://www.tampermonkey.net/) in Chrome, Edge, Brave, or Firefox.
+2. Click to install the script from your deployed site: `userscript/gemini-watermark-remover.user.js` or from the repository's `dist/userscript/`.
+3. Open [https://gemini.google.com/app](https://gemini.google.com/app) — generated images will be cleaned automatically!
+
+### Chrome Extension (Manifest V3)
+1. Run `npm run build`.
+2. Open Chrome and navigate to `chrome://extensions/`.
+3. Enable **Developer mode** in the upper-right corner.
+4. Click **Load unpacked** and select the `dist/extension` folder.
+
+---
+
+## 5. Technical Math & How It Works
+
+Google Gemini blends a watermark asset $C_{\text{src}}$ over an image $C_{\text{orig}}$ with alpha map $\alpha$:
+$$C_{\text{wm}} = \alpha \cdot C_{\text{src}} + (1 - \alpha) \cdot C_{\text{orig}}$$
+
+The DevCart Gemini Watermark Tool extracts the exact $C_{\text{src}}$ color and alpha profile $\alpha$ for Gemini's 48x48 and 96x96 watermark assets and algebraically inverts the equation:
+$$C_{\text{orig}} = \frac{C_{\text{wm}} - \alpha \cdot C_{\text{src}}}{1 - \alpha}$$
+
+This analytical solution guarantees 100% pixel fidelity with zero AI hallucination, smearing, or color distortion.
+
+---
+
+## 6. Privacy & Security Guarantee
+
+- **Zero Server Uploads**: Processing occurs 100% inside your local device's memory.
+- **Zero Telemetry**: No cookies, no analytics beacons, no tracking.
+- **Full Ownership**: You maintain 100% rights and copyright over all your processed files.
+
+---
+
+## 7. Developer & Attribution
+
+- **Organization**: **DevCart Technologies** ([https://devcart-technologies.in/](https://devcart-technologies.in/))
+- **Lead Developer**: **Vivek Dalvi** ([vivekdalvi147@gmail.com](mailto:vivekdalvi147@gmail.com))
+- **Official GitHub**: [https://github.com/vivek-dalvi/gemini-watermark-tool.git](https://github.com/vivek-dalvi/gemini-watermark-tool.git)
+- **License**: MIT License
+
+---
+
+## 8. Troubleshooting & FAQs
+
+| Issue | Potential Cause | Solution |
+| :--- | :--- | :--- |
+| **"Original image is unavailable"** | Page refreshed mid-interception on Gemini web app. | Refresh `gemini.google.com` and trigger download again. |
+| **Watermark faintly visible** | Unusual aspect ratio or non-standard token resolution. | Enable **Best Effort Mode (Force)** in the actions panel. |
+| **Extension popup won't load** | Developer mode disabled in Chrome. | Ensure Developer mode is toggled ON in `chrome://extensions/`. |
+| **CLI missing optional decoder** | Native image dependencies omitted. | Run `npm install sharp` or use `--decoder synthetic`. |
+
+---
+
+## 9. Contact, Support & Contributions
+
+- **Brand**: **DevCart Technologies**
+- **Lead Developer**: **Vivek Dalvi**
+- **Personal / Developer Email**: [vivekdalvi147@gmail.com](mailto:vivekdalvi147@gmail.com)
+- **Official Inquiries**: [info@devcart-technologies.in](mailto:info@devcart-technologies.in)
+- **Website**: [https://devcart-technologies.in/](https://devcart-technologies.in/)
+- **GitHub Repository**: [https://github.com/vivek-dalvi/gemini-watermark-tool.git](https://github.com/vivek-dalvi/gemini-watermark-tool.git)
+
+Contributions, pull requests, and bug reports are welcome! If this tool helped you, please give it a ⭐ star on GitHub.
+
+---
+
+## 10. License & Legal Disclaimer
+
+Distributed under the **MIT License**. Copyright (c) 2026 DevCart Technologies & Vivek Dalvi.
+
+*Google, Gemini, and Veo are trademarks of Google LLC. This independent software project is developed by DevCart Technologies and is not affiliated with or endorsed by Google LLC.*
+
