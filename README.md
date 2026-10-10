@@ -43,7 +43,7 @@ Here are actual Gemini AI generated images processed through the DevCart Gemini 
 
 | Watermarked Original Input | Clean Processed Result (Zero Quality Loss) |
 | :---: | :---: |
-| ![Gemini Image Before Watermark Removal](https://i.ibb.co/DgYz65g4/Gemini-Generated-Image-hc0s02hc0s02hc0s.png) | ![Gemini Image After Watermark Removal](https://i.ibb.co/7tGKvVT4/image.png) |
+| ![Gemini Image Before Watermark Removal](public/examples/example1-before.png) | ![Gemini Image After Watermark Removal](public/examples/example1-after.png) |
 | *Watermark applied in bottom-right corner* | *Watermark fully removed with exact original pixel restoration* |
 
 ---
@@ -52,7 +52,7 @@ Here are actual Gemini AI generated images processed through the DevCart Gemini 
 
 | Watermarked Original Input | Clean Processed Result (Zero Quality Loss) |
 | :---: | :---: |
-| ![Gemini Image 2 Before Watermark Removal](https://i.ibb.co/8nHwdmcv/image.png) | ![Gemini Image 2 After Watermark Removal](https://i.ibb.co/4Zk2CTgP/unwatermarked-Gemini-Generated-Image-rn7na3rn7na3rn7n.png) |
+| ![Gemini Image 2 Before Watermark Removal](public/examples/example2-before.png) | ![Gemini Image 2 After Watermark Removal](public/examples/example2-after.png) |
 | *Translucent logo over complex background* | *100% clean image output with mathematical precision* |
 
 ---
@@ -154,11 +154,20 @@ Because the web app compiles to static HTML/JS/CSS assets with a lightweight Nod
    pm2 start "npm start" --name "gemini-watermark-tool"
    ```
 
-### Method E: Deploy to Static Hosting (Vercel, Cloudflare Pages, Netlify)
-Since the client-side app runs 100% in the browser:
-- **Root Directory**: `.`
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist` (or `public`)
+### Method F: Deploy to Hugging Face Spaces (Recommended)
+To prevent **404 Not Found** errors and ensure all code (including `app.js`) works:
+
+#### Option 1: Docker (Best for HF)
+1. Create a new Space on Hugging Face.
+2. Select **Docker** as the SDK.
+3. The repo already contains the necessary `package.json` and build scripts. Hugging Face will automatically use the `Dockerfile` instructions (Method C) to build and serve the app.
+4. Your tool will be live with all features working perfectly.
+
+#### Option 2: Static Space
+1. Run `npm run build` locally on your machine.
+2. Create a new **Static** Space on Hugging Face.
+3. Upload **ONLY the contents of the `dist/` folder** to the root of your Space.
+4. Ensure `index.html`, `app.js`, and the `models/` folder are at the top level.
 
 ---
 
